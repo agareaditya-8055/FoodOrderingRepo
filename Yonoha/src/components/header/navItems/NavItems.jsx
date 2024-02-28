@@ -1,12 +1,27 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../../../utils/useOnlineStatus";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  toggleDarkMode,
+  toggleLightMode,
+} from "../../../store/slices/themeSlice";
 
 const NavItems = () => {
   const [btnName, setBtnName] = useState("Login");
   const onlineStatus = useOnlineStatus();
   const cart = useSelector((state) => state.cart.items);
+
+  const isDarkMode = useSelector((state) => state.theme.darkMode);
+  const dispatch = useDispatch();
+
+  const handleDarkModeToggle = () => {
+    if (isDarkMode) {
+      dispatch(toggleLightMode());
+    } else {
+      dispatch(toggleDarkMode());
+    }
+  };
   return (
     <div className="navItems_container">
       <ul className="flex p-3 m-3">
@@ -34,12 +49,20 @@ const NavItems = () => {
           </Link>
         </li>
         <button
-          className="login_btn px-4 py-1 bg-green-200 rounded-lg font-bold"
+          className={`login_btn px-4 py-1 bg-green-200 rounded-lg font-bold ${
+            isDarkMode && "text-black"
+          }`}
           onClick={() =>
             btnName === "Login" ? setBtnName("Logout") : setBtnName("Login")
           }
         >
           {btnName}
+        </button>
+        <button
+          className="px-4 font-bold text-lg"
+          onClick={handleDarkModeToggle}
+        >
+          {isDarkMode ? "🌕" : "🌑"}
         </button>
       </ul>
     </div>

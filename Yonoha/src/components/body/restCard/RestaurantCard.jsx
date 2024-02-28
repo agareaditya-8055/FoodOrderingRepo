@@ -1,12 +1,18 @@
 import React from "react";
 import { CDN_URL } from "../../../utils/constants";
+import { useSelector } from "react-redux";
 
 const RestaurantCard = ({ resData }) => {
   const { costForTwo, cuisines, name, avgRating, sla, cloudinaryImageId } =
     resData?.info;
+  const isDarkMode = useSelector((state) => state.theme.darkMode);
 
   return (
-    <div className="res_card m-2 p-2 w-[232px] bg-gray-100 hover:bg-gray-200 rounded-lg">
+    <div
+      className={`res_card m-2 p-2 w-[232px] hover:bg-gray-200 rounded-lg ${
+        isDarkMode && "text-white"
+      } ${isDarkMode ? "bg-bgCard" : " bg-gray-100"} `}
+    >
       <img
         src={CDN_URL + cloudinaryImageId}
         alt="dishImage"
