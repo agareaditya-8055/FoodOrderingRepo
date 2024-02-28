@@ -1,4 +1,3 @@
-import { useState } from "react";
 import ItemList from "./ItemList";
 
 const RestaurantCategory = ({ data, showItems, setShowIndex }) => {
@@ -21,7 +20,13 @@ const RestaurantCategory = ({ data, showItems, setShowIndex }) => {
           </span>
           <span className="text-xl">⬇️</span>
         </div>
-        {showItems && <ItemList items={itemCards} />}
+        {showItems && (
+          <ItemList
+            items={itemCards}
+            buttonContent={"ADD+"}
+            actionType={"add"}
+          />
+        )}
       </div>
     </div>
   );

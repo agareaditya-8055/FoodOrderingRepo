@@ -1,7 +1,16 @@
+import { useDispatch } from "react-redux";
 import { CDN_URL } from "../../../utils/constants";
+import { addItems, removeItems } from "../../../store/slices/cartSlice";
 
-const ItemList = ({ items }) => {
-  // console.log(items);
+const ItemList = ({ items, buttonContent, actionType }) => {
+  const dispatch = useDispatch();
+  const handleClick = (item) => {
+    if (actionType === "add") {
+      dispatch(addItems(item));
+    } else {
+      dispatch(removeItems(item?.card?.info?.id));
+    }
+  };
   return (
     <div>
       {items.map((item) => (
@@ -28,8 +37,11 @@ const ItemList = ({ items }) => {
               src={CDN_URL + item?.card?.info?.imageId}
               alt="dishImage"
             />
-            <button className="py-1 px-4 text-orange-400 bg-slate-50 shadow-lg rounded-lg absolute bottom-2">
-              ADD+
+            <button
+              className="py-1 px-4 text-orange-400 bg-slate-50 shadow-lg rounded-lg absolute bottom-2"
+              onClick={() => handleClick(item)}
+            >
+              {buttonContent}
             </button>
           </div>
         </div>
