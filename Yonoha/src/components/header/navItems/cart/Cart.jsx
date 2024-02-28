@@ -1,11 +1,14 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { clearCart } from "../../../../store/slices/cartSlice";
+import ItemList from "../../../body/resMenu/ItemList.jsx";
 
 const Cart = () => {
   const dispatch = useDispatch();
   const handleClearAll = () => {
     dispatch(clearCart());
   };
+
+  const selectedItems = useSelector((state) => state.cart.items);
   return (
     <div className="text-center m-4 p-4">
       <h1 className="text-2xl font-bold">Cart</h1>
