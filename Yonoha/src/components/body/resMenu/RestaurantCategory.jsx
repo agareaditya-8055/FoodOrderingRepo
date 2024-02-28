@@ -1,8 +1,9 @@
+import { useSelector } from "react-redux";
 import ItemList from "./ItemList";
 
 const RestaurantCategory = ({ data, showItems, setShowIndex }) => {
   const { itemCards } = data;
-
+  const isDarkMode = useSelector((state) => state.theme.darkMode);
   const handleClick = () => {
     setShowIndex();
   };
@@ -10,7 +11,13 @@ const RestaurantCategory = ({ data, showItems, setShowIndex }) => {
   return (
     <div>
       {/* header */}
-      <div className="w-1/2 mx-auto my-4 bg-gray-50 shadow-lg p-4 ">
+      <div
+        className={`w-1/2 mx-auto my-4 rounded-lg  p-4 ${
+          isDarkMode
+            ? "text-white bg-htmlColor transition duration-500"
+            : "text-black bg-gray-100 shadow-lg transition duration-500 border-gray-700"
+        }`}
+      >
         <div
           className="flex justify-between cursor-pointer"
           onClick={handleClick}
