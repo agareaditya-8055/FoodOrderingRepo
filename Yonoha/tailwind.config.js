@@ -4,8 +4,9 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        bgColor: "#191825",
+        bgColor: "#1F4068",
         bgCard: "#323840",
+        logoColor: "#845EC2",
       },
     },
   },

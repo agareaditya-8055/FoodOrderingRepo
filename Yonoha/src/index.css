@@ -2,10 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
-.dark {
-  background-color: #24292d;
+.light {
+  background-color: #e2e2e2;
   transition: background 0.5s;
 }
+
+.dark {
+  background-color: #202020;
+  transition: background 0.5s;
+}
+
 /* 
 .header_container {
   display: flex;

@@ -9,9 +9,13 @@ const RestaurantCard = ({ resData }) => {
 
   return (
     <div
-      className={`res_card m-2 p-2 w-[232px] hover:bg-gray-200 rounded-lg ${
-        isDarkMode && "text-white"
-      } ${isDarkMode ? "bg-bgCard" : " bg-gray-100"} `}
+      className={`res_card m-2 p-2 w-[232px]  rounded-lg ${
+        isDarkMode && "text-white transition duration-500"
+      } ${
+        isDarkMode
+          ? "bg-bgCard transition duration-500"
+          : " bg-gray-100 transition duration-500 hover:bg-gray-200"
+      } `}
     >
       <img
         src={CDN_URL + cloudinaryImageId}
