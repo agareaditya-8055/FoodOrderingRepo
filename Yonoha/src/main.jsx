@@ -10,6 +10,8 @@ import RestaurantMenu from "./components/body/resMenu/RestaurantMenu";
 import Cart from "./components/header/navItems/cart/Cart";
 import { Provider } from "react-redux";
 import appStore from "./store/appStore";
+import Signin from "./components/body/signin/Signin";
+import Signup from "./components/body/signup/Signup";
 
 const show = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -47,6 +49,14 @@ const appRoute = createBrowserRouter([
       {
         path: "/cart",
         element: <Cart />,
+      },
+      {
+        path: "/signin",
+        element: <Signin />,
+      },
+      {
+        path: "/signup",
+        element: <Signup />,
       },
     ],
     errorElement: <Error />,
