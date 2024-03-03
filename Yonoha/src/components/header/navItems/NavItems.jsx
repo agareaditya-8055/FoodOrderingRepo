@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import useOnlineStatus from "../../../utils/useOnlineStatus";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,58 +12,49 @@ import authService from "../../../appwrite/auth";
 const NavItems = () => {
   const onlineStatus = useOnlineStatus();
   const cart = useSelector((state) => state.cart.items);
-
   const isDarkMode = useSelector((state) => state.theme.darkMode);
   const dispatch = useDispatch();
-
   const navigate = useNavigate();
   const name = useSelector((state) => state?.auth?.userData?.name);
 
-  console.log(name);
+  const handleSignin = useCallback(() => navigate("/signin"), [navigate]);
 
-  const handleSignin = () => {
-    navigate("/signin");
-  };
-
-  const handleSignout = async () => {
+  const handleSignout = useCallback(async () => {
     try {
       const logoutResponse = await authService.logout();
       if (logoutResponse) {
-        console.log("logout");
-        dispatch(authLogout()); // Assuming you have a logoutAction imported from your actions
+        dispatch(authLogout());
         navigate("/signin");
       }
     } catch (error) {
-      console.log("Error signing out:", error);
+      console.error("Error signing out:", error);
     }
-  };
+  }, [dispatch, navigate]);
 
-  const handleDarkModeToggle = () => {
-    if (isDarkMode) {
-      dispatch(toggleLightMode());
-    } else {
-      dispatch(toggleDarkMode());
-    }
-  };
+  const handleDarkModeToggle = useCallback(() => {
+    dispatch(isDarkMode ? toggleLightMode() : toggleDarkMode());
+  }, [dispatch, isDarkMode]);
+
+  const navItems = [
+    { label: name, className: "px-4 font-bold text-lg" },
+    {
+      label: `Online Status : ${onlineStatus ? "✅" : "❎"}`,
+      className: "px-4 font-bold text-lg",
+    },
+    { label: "Home", link: "/", className: "px-4 font-bold text-lg" },
+    { label: "About", link: "/about", className: "px-4 font-bold text-lg" },
+    { label: "Contact", link: "/contact", className: "px-4 font-bold text-lg" },
+    { label: "Grocery", link: "/grocery", className: "px-4 font-bold text-lg" },
+  ];
+
   return (
     <div className="navItems_container">
       <ul className="flex p-3 m-3">
-        <li className="px-4 font-bold text-lg">{name}</li>
-        <li className="px-4 font-bold text-lg">
-          Online Status : {onlineStatus ? "✅" : "❎"}
-        </li>
-        <li className="px-4 font-bold text-lg">
-          <Link to="/">Home</Link>
-        </li>
-        <li className="px-4 font-bold text-lg">
-          <Link to="/about">About</Link>
-        </li>
-        <li className="px-4 font-bold text-lg">
-          <Link to="/contact">Contact</Link>
-        </li>
-        <li className="px-4 font-bold text-lg">
-          <Link to="/grocery">Grocery</Link>
-        </li>
+        {navItems.map((item, index) => (
+          <li key={index} className={item.className}>
+            {item.link ? <Link to={item.link}>{item.label}</Link> : item.label}
+          </li>
+        ))}
         <li className="px-4 font-semibold text-2xl relative">
           <Link to="/cart">
             🛒{" "}
@@ -98,4 +89,4 @@ const NavItems = () => {
   );
 };
 
-export default NavItems;
+export default React.memo(NavItems);
