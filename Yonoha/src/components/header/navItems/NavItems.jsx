@@ -1,19 +1,42 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
 import useOnlineStatus from "../../../utils/useOnlineStatus";
 import { useDispatch, useSelector } from "react-redux";
+import { logout as authLogout } from "../../../store/slices/authSlice";
 import {
   toggleDarkMode,
   toggleLightMode,
 } from "../../../store/slices/themeSlice";
+import authService from "../../../appwrite/auth";
 
 const NavItems = () => {
-  const [btnName, setBtnName] = useState("Login");
   const onlineStatus = useOnlineStatus();
   const cart = useSelector((state) => state.cart.items);
 
   const isDarkMode = useSelector((state) => state.theme.darkMode);
   const dispatch = useDispatch();
+
+  const navigate = useNavigate();
+  const name = useSelector((state) => state?.auth?.userData?.name);
+
+  console.log(name);
+
+  const handleSignin = () => {
+    navigate("/signin");
+  };
+
+  const handleSignout = async () => {
+    try {
+      const logoutResponse = await authService.logout();
+      if (logoutResponse) {
+        console.log("logout");
+        dispatch(authLogout()); // Assuming you have a logoutAction imported from your actions
+        navigate("/signin");
+      }
+    } catch (error) {
+      console.log("Error signing out:", error);
+    }
+  };
 
   const handleDarkModeToggle = () => {
     if (isDarkMode) {
@@ -25,6 +48,7 @@ const NavItems = () => {
   return (
     <div className="navItems_container">
       <ul className="flex p-3 m-3">
+        <li className="px-4 font-bold text-lg">{name}</li>
         <li className="px-4 font-bold text-lg">
           Online Status : {onlineStatus ? "✅" : "❎"}
         </li>
@@ -48,16 +72,21 @@ const NavItems = () => {
             </div>
           </Link>
         </li>
-        <button
-          className={`login_btn px-4 py-1 bg-green-200 rounded-lg font-bold ${
-            isDarkMode && "text-black"
-          }`}
-          onClick={() =>
-            btnName === "Login" ? setBtnName("Logout") : setBtnName("Login")
-          }
-        >
-          {btnName}
-        </button>
+        {name ? (
+          <button
+            className="login_btn px-4 py-1 bg-green-200 rounded-lg font-bold"
+            onClick={handleSignout}
+          >
+            Sign Out
+          </button>
+        ) : (
+          <button
+            className="login_btn px-4 py-1 bg-green-200 rounded-lg font-bold"
+            onClick={handleSignin}
+          >
+            Sign In
+          </button>
+        )}
         <button
           className="px-4 font-bold text-lg"
           onClick={handleDarkModeToggle}

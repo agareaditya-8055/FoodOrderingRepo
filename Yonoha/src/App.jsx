@@ -26,11 +26,13 @@ function App() {
   };
 
   useEffect(() => {
+    checkLoggedInUser();
+  }, [dispatch]);
+
+  useEffect(() => {
     document.querySelector("html").classList.remove("light", "dark");
     document.querySelector("html").classList.add(isDarkMode);
-
-    checkLoggedInUser();
-  }, [isDarkMode, dispatch]);
+  }, [isDarkMode]);
 
   return (
     <>
