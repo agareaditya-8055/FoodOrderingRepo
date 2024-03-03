@@ -1,37 +1,7 @@
-// SignUpForm.js
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import authService from "../../../appwrite/auth";
-import { login as authLogin } from "../../../store/slices/authSlice";
+import { useSignupForm } from "../../../utils/useSignupForm";
+
 const Signup = () => {
-  const dispatch = useDispatch();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
-
-  const navigate = useNavigate();
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const userData = await authService.createAccount({
-        name,
-        email,
-        password,
-      });
-
-      if (userData) {
-        const userData = await authService.getCurrentUser();
-        if (userData) dispatch(authLogin({ userData }));
-        navigate("/");
-        console.log("data ", userData);
-      }
-    } catch (error) {
-      setError(error.message);
-    }
-  };
-
+  const { formState, handleChange, handleSubmit } = useSignupForm();
   return (
     <div className="flex justify-center items-center h-full">
       <form onSubmit={handleSubmit} className="w-full max-w-md">
@@ -43,8 +13,8 @@ const Signup = () => {
             type="text"
             id="name"
             name="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            value={formState.name}
+            onChange={handleChange}
             className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             placeholder="Enter your name"
             required
@@ -58,8 +28,8 @@ const Signup = () => {
             type="email"
             id="email"
             name="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={formState.email}
+            onChange={handleChange}
             className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             placeholder="Enter your email"
             required
@@ -76,8 +46,8 @@ const Signup = () => {
             type="password"
             id="password"
             name="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={formState.password}
+            onChange={handleChange}
             className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             placeholder="Enter your password"
             required
