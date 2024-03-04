@@ -14,42 +14,40 @@ const ItemList = ({ items, buttonContent, actionType }) => {
       dispatch(removeItems(item?.card?.info?.id));
     }
   };
+
   return (
     <div>
       {items.map((item) => {
+        const { id, name, price, defaultPrice, description, imageId } =
+          item.card.info;
         const isInCart = cartItems.some(
-          (cartItem) => cartItem.card.info.id === item.card.info.id
+          (cartItem) => cartItem.card.info.id === id
         );
+
         return (
           <div
-            key={item.card.info.id}
-            className={` flex rounded-lg justify-between py-2 my-2 relative px-2 ${
+            key={id}
+            className={`flex rounded-lg justify-between py-2 my-2 relative px-2 ${
               isDarkMode
-                ? "bg-bgCard text-white "
-                : "bg-gray-200 border-b-2 text-black shadow-lg "
+                ? "bg-bgCard text-white"
+                : "bg-gray-200 border-b-2 text-black shadow-lg"
             }`}
           >
             <div className="flex flex-col text-start text-wrap w-3/4">
-              <span className="font-bold">{item?.card?.info?.name}</span>
-              <span>
-                ₹{" "}
-                {item?.card?.info?.price / 100 ||
-                  item?.card?.info?.defaultPrice / 100}
-              </span>
+              <span className="font-bold">{name}</span>
+              <span>₹ {price / 100 || defaultPrice / 100}</span>
               <p
                 className={`text-sm ${
                   isDarkMode ? "text-gray-400" : "text-gray-500"
                 } my-3`}
               >
-                {item?.card?.info?.description}
+                {description}
               </p>
             </div>
-            <div className="w-1/4 flex justify-center  ">
+            <div className="w-1/4 flex justify-center">
               <img
-                className={
-                  item?.card?.info?.imageId ? "w-3/4 rounded-lg" : "hidden"
-                }
-                src={CDN_URL + item?.card?.info?.imageId}
+                className={imageId ? "w-3/4 rounded-lg" : "hidden"}
+                src={CDN_URL + imageId}
                 alt="dishImage"
               />
               <button
@@ -70,4 +68,5 @@ const ItemList = ({ items, buttonContent, actionType }) => {
     </div>
   );
 };
+
 export default ItemList;

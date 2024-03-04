@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 
 import Shimmer from "../restCard/Shimmer";
 import { useParams } from "react-router-dom";
@@ -11,6 +11,11 @@ const RestaurantMenu = () => {
 
   const isDarkMode = useSelector((state) => state.theme.darkMode);
   const resMenuData = useRestaurantMenu(resId);
+
+  const onShowIndexChange = useCallback((index) => {
+    console.log("Creating a new function for index", index);
+    setShowIndex((prevIndex) => (prevIndex === index ? null : index));
+  }, []);
 
   if (resMenuData === null) {
     return <Shimmer />;
@@ -39,16 +44,16 @@ const RestaurantMenu = () => {
       <p className="font-bold text-lg">
         {cuisines.join(", ")} - {costForTwoMessage}
       </p>
-      {categories.map((category, index) => (
-        <RestaurantCategory
-          key={category.card.card.title}
-          data={category.card.card}
-          showItems={index === showIndex ? true : false}
-          setShowIndex={() =>
-            setShowIndex((prevIndex) => (prevIndex === index ? null : index))
-          }
-        />
-      ))}
+      {categories.map((category, index) => {
+        return (
+          <RestaurantCategory
+            key={category.card.card.title}
+            data={category.card.card}
+            showItems={index === showIndex}
+            setShowIndex={() => onShowIndexChange(index)}
+          />
+        );
+      })}
     </div>
   );
 };
