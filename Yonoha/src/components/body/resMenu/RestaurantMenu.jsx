@@ -13,7 +13,6 @@ const RestaurantMenu = () => {
   const resMenuData = useRestaurantMenu(resId);
 
   const onShowIndexChange = useCallback((index) => {
-    console.log("Creating a new function for index", index);
     setShowIndex((prevIndex) => (prevIndex === index ? null : index));
   }, []);
 
@@ -31,7 +30,6 @@ const RestaurantMenu = () => {
         "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
     );
 
-  // console.log(categories);
   return (
     <div
       className={`menu  m-6 p-5 text-center ${

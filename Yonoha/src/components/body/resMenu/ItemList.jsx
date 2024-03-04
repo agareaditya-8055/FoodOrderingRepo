@@ -1,15 +1,35 @@
 import { useDispatch, useSelector } from "react-redux";
 import { CDN_URL } from "../../../utils/constants";
 import { addItems, removeItems } from "../../../store/slices/cartSlice";
+import docService from "../../../appwrite/docs";
+import authService from "../../../appwrite/auth";
 
 const ItemList = ({ items, buttonContent, actionType }) => {
   const isDarkMode = useSelector((state) => state.theme.darkMode);
   const cartItems = useSelector((state) => state.cart.items);
   const dispatch = useDispatch();
 
-  const handleClick = (item) => {
+  const handleClick = async (item) => {
     if (actionType === "add") {
-      dispatch(addItems(item));
+      const { name, price, defaultPrice, description, imageId } =
+        item.card.info;
+      const getUser = await authService.getCurrentUser();
+      const { $id } = getUser;
+      const userId = $id;
+      if ($id) {
+        const createDocs = await docService.createCartItems({
+          name,
+          price,
+          defaultPrice,
+          description,
+          imageId,
+          userId,
+        });
+        if (createDocs) {
+          dispatch(addItems(item));
+          console.log("success");
+        }
+      }
     } else {
       dispatch(removeItems(item?.card?.info?.id));
     }

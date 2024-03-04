@@ -15,11 +15,13 @@ const Body = () => {
 
   const onlineStatus = useOnlineStatus();
 
+  console.log(resDataList);
+
   if (onlineStatus === false) {
     return <h1>Please check your internet connection</h1>;
   }
 
-  if (resDataList.length === 0) {
+  if (resDataList?.length === 0) {
     return <Shimmer />;
   }
   return (
@@ -35,7 +37,7 @@ const Body = () => {
           <button
             className="search_btn search-m px-4 py-1 bg-green-200 mx-2 rounded-lg"
             onClick={() => {
-              const filteredRestaurantList = resDataList.filter((data) =>
+              const filteredRestaurantList = resDataList?.filter((data) =>
                 data?.info?.name
                   .toLowerCase()
                   .includes(searchText.toLowerCase())
@@ -59,7 +61,7 @@ const Body = () => {
         </button>
       </div>
       <div className="res_container flex flex-wrap">
-        {filteredList.map((data) => (
+        {filteredList?.map((data) => (
           <Link key={data.info.id} to={"/restaurants/" + data.info.id}>
             {data.info.isOpen ? (
               <RestaurantCardLabel resData={data} />
