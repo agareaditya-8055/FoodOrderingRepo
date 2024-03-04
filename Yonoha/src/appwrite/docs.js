@@ -1,4 +1,4 @@
-import { Client, Databases, ID } from "appwrite";
+import { Client, Databases, ID, Query } from "appwrite";
 import conf from "../conf/conf";
 
 export class DocumentService {
@@ -36,6 +36,18 @@ export class DocumentService {
       );
     } catch (error) {
       console.log("appwrite :: createCartitems :: error", error);
+    }
+  }
+
+  async showCartItems(userId) {
+    try {
+      return await this.databases.listDocuments(
+        conf.appwriteDatabaseId,
+        conf.appwriteCollectionId,
+        [Query.equal("userId", userId)]
+      );
+    } catch (error) {
+      console.log("appwrite :: showCartItems :: error", error);
     }
   }
 }
