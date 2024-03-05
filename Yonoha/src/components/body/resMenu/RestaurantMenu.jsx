@@ -52,6 +52,9 @@ const RestaurantMenu = () => {
           />
         );
       })}
+      <p className="text-sm mt-8">
+        Explore our delightful menu and savor the flavors! 🍽️
+      </p>
     </div>
   );
 };

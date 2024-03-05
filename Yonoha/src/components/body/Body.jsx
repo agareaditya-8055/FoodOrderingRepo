@@ -4,38 +4,45 @@ import Shimmer from "./restCard/Shimmer";
 import { Link } from "react-router-dom";
 import useRestaurantData from "../../utils/useRestaurantData";
 import useOnlineStatus from "../../utils/useOnlineStatus";
+import { useSelector } from "react-redux";
 
 const Body = () => {
   const [searchText, setSearchText] = useState("");
-
   const RestaurantCardLabel = isOpenLable(RestaurantCard);
-
   const { resDataList, filteredList, setFilteredList, setResDataList } =
     useRestaurantData();
-
   const onlineStatus = useOnlineStatus();
+  const isDarkMode = useSelector((state) => state.theme.darkMode);
+
+  const bgColor = isDarkMode ? "bg-htmlColor" : "bg-gray-100";
+  const cardColor = isDarkMode ? "bg-bgCard" : "bg-white";
+  const textColor = isDarkMode ? "text-white" : "text-gray-700";
+  const inputColor = isDarkMode
+    ? "bg-gray-700 text-white"
+    : "bg-white text-gray-700";
+  const buttonColor = isDarkMode ? "bg-logoColor" : "bg-green-200";
 
   console.log(resDataList);
-
   if (onlineStatus === false) {
     return <h1>Please check your internet connection</h1>;
   }
-
   if (resDataList?.length === 0) {
     return <Shimmer />;
   }
   return (
-    <div className="body">
-      <div className="filter flex items-center m-2">
-        <div className="search mx-4 my-1 px-4 py-1">
+    <div className={`body ${bgColor}`}>
+      <div
+        className={`filter flex items-center m-2 ${cardColor} rounded-lg shadow-md p-4`}
+      >
+        <div className={`search mx-4 my-1 px-4 py-1 ${textColor}`}>
           <input
             type="text"
-            className="search_input search-m border border-solid border-black"
+            className={`search_input search-m border border-solid border-gray-300 rounded-lg ${inputColor}`}
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
           />
           <button
-            className="search_btn search-m px-4 py-1 bg-green-200 mx-2 rounded-lg"
+            className={`search_btn search-m px-4 py-1 ${buttonColor} mx-2 rounded-lg`}
             onClick={() => {
               const filteredRestaurantList = resDataList?.filter((data) =>
                 data?.info?.name
@@ -49,7 +56,7 @@ const Body = () => {
           </button>
         </div>
         <button
-          className="filter_btn px-4 py-1 bg-green-200 rounded-lg"
+          className={`filter_btn px-4 py-1 ${buttonColor} rounded-lg`}
           onClick={() => {
             let newResdataList = resDataList.filter(
               (data) => data?.info?.avgRating > 4.4
@@ -60,7 +67,7 @@ const Body = () => {
           Top Rated Restaurants
         </button>
       </div>
-      <div className="res_container flex flex-wrap">
+      <div className="res_container flex flex-wrap justify-center gap-4 p-4">
         {filteredList?.map((data) => (
           <Link key={data.info.id} to={"/restaurants/" + data.info.id}>
             {data.info.isOpen ? (
@@ -69,7 +76,6 @@ const Body = () => {
               <RestaurantCard resData={data} />
             )}
           </Link>
-          // <RestaurantCard resData={data} />
         ))}
       </div>
     </div>
