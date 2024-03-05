@@ -51,6 +51,18 @@ export class DocumentService {
       console.log("appwrite :: showCartItems :: error", error);
     }
   }
+
+  async deleteCartItems(itemId) {
+    try {
+      return await this.databases.deleteDocument(
+        conf.appwriteDatabaseId,
+        conf.appwriteCollectionId,
+        itemId
+      );
+    } catch (error) {
+      console.log("appwrite :: showCartItems :: error", error);
+    }
+  }
 }
 
 const docService = new DocumentService();

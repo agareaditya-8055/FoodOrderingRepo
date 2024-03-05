@@ -27,7 +27,7 @@ export const useSigninForm = () => {
         if (userData) {
           dispatch(authLogin({ userData }));
           const response = await docService.showCartItems(userId);
-          const data = response.documents;
+          const data = response?.documents;
           if (data) {
             dispatch(addItems(data));
           }
@@ -35,7 +35,7 @@ export const useSigninForm = () => {
         }
       }
     } catch (error) {
-      setError(error.message);
+      console.log(error);
     }
   };
 
