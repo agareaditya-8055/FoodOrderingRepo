@@ -1,15 +1,45 @@
 import React, { useEffect } from "react";
-import Header from "./components/header/Header";
-import "./index.css";
+import { useDispatch, useSelector } from "react-redux";
 import { Outlet } from "react-router-dom";
-import { useSelector } from "react-redux";
 
-function App() {
+import Header from "./components/header/Header";
+import authService from "./appwrite/auth";
+import docService from "./appwrite/docs";
+import { login, logout } from "./store/slices/authSlice";
+import { addItems } from "./store/slices/cartSlice";
+
+import "./index.css";
+
+const App = () => {
+  const dispatch = useDispatch();
   const isDarkMode = useSelector((state) => state.theme.response);
 
   useEffect(() => {
-    document.querySelector("html").classList.remove("light", "dark");
-    document.querySelector("html").classList.add(isDarkMode);
+    const getCurrentUser = async () => {
+      const userData = await authService.getCurrentUser();
+      const userId = userData?.$id;
+
+      if (userData) {
+        dispatch(login({ userData }));
+
+        const response = await docService.showCartItems(userId);
+        const data = response?.documents;
+
+        if (data) {
+          dispatch(addItems(data));
+        }
+      } else {
+        dispatch(logout());
+      }
+    };
+
+    getCurrentUser();
+  }, [dispatch]);
+
+  useEffect(() => {
+    const htmlClassList = document.querySelector("html").classList;
+    htmlClassList.remove("light", "dark");
+    htmlClassList.add(isDarkMode);
   }, [isDarkMode]);
 
   return (
@@ -18,6 +48,6 @@ function App() {
       <Outlet />
     </>
   );
-}
+};
 
 export default App;
