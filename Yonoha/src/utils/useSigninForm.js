@@ -3,6 +3,8 @@ import { useDispatch } from "react-redux";
 import { login as authLogin } from "../store/slices/authSlice";
 import authService from "../appwrite/auth";
 import { useNavigate } from "react-router-dom";
+import docService from "../appwrite/docs";
+import { addItems } from "../store/slices/cartSlice";
 
 export const useSigninForm = () => {
   const dispatch = useDispatch();
@@ -21,8 +23,16 @@ export const useSigninForm = () => {
       const session = await authService.login(formState);
       if (session) {
         const userData = await authService.getCurrentUser();
-        if (userData) dispatch(authLogin({ userData }));
-        navigate("/");
+        const userId = userData.$id;
+        if (userData) {
+          dispatch(authLogin({ userData }));
+          const response = await docService.showCartItems(userId);
+          const data = response.documents;
+          if (data) {
+            dispatch(addItems(data));
+          }
+          navigate("/");
+        }
       }
     } catch (error) {
       setError(error.message);

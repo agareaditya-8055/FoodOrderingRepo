@@ -7,7 +7,6 @@ const Cart = () => {
   const handleClearAll = () => {
     dispatch(clearCart());
   };
-
   const isDarkMode = useSelector((state) => state.theme.darkMode);
   const selectedItems = useSelector((state) => state.cart.items);
 

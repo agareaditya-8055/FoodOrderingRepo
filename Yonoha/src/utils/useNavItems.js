@@ -4,7 +4,7 @@ import { logout as authLogout } from "../store/slices/authSlice";
 import { toggleDarkMode, toggleLightMode } from "../store/slices/themeSlice";
 import authService from "../appwrite/auth";
 import useOnlineStatus from "./useOnlineStatus";
-
+import { clearCart } from "../store/slices/cartSlice";
 export const useNavItems = (navigate) => {
   const onlineStatus = useOnlineStatus();
   const cart = useSelector((state) => state.cart.items);
@@ -19,6 +19,7 @@ export const useNavItems = (navigate) => {
       const logoutResponse = await authService.logout();
       if (logoutResponse) {
         dispatch(authLogout());
+        dispatch(clearCart());
         navigate("/signin");
       }
     } catch (error) {
