@@ -13,6 +13,7 @@ export class DocumentService {
   }
 
   async createCartItems({
+    id,
     name,
     price,
     defaultPrice,
@@ -24,7 +25,7 @@ export class DocumentService {
       return await this.databases.createDocument(
         conf.appwriteDatabaseId,
         conf.appwriteCollectionId,
-        ID.unique(),
+        id,
         {
           name,
           price,
