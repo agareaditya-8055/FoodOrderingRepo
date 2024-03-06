@@ -1,54 +1,17 @@
-import { useDispatch, useSelector } from "react-redux";
 import { CDN_URL } from "../../../utils/constants";
-import { addItems, removeItems } from "../../../store/slices/cartSlice";
-import docService from "../../../appwrite/docs";
-import authService from "../../../appwrite/auth";
+import { useItemList } from "../../../utils/useItemList";
 
 const ItemList = ({ items, buttonContent, actionType }) => {
-  const isDarkMode = useSelector((state) => state.theme.darkMode);
-  const cartItems = useSelector((state) => state.cart.items);
-  const userId = useSelector((state) => state?.auth?.userData?.$id);
-  const dispatch = useDispatch();
+  const { handleAddClick, handleDeleteClick, cartItems, isDarkMode, userId } =
+    useItemList();
 
-  const handleClick = async (item) => {
+  const handleClick = (item) => {
     if (actionType === "add") {
-      const {
-        id: cartItemId,
-        name,
-        price,
-        defaultPrice,
-        description,
-        imageId,
-      } = item;
-      const id = `${userId}${cartItemId}`;
-      const priceString = (price / 100).toString();
-      const defaultpriceString = (defaultPrice / 100).toString();
-      if (userId) {
-        const createDocs = await docService.createCartItems({
-          id,
-          name,
-          price: priceString,
-          defaultPrice: defaultpriceString,
-          description,
-          imageId,
-          userId,
-        });
-        console.log("cart has been created", createDocs);
-        if (createDocs) {
-          dispatch(addItems(createDocs));
-        }
-      } else {
-        console.log("Please Sign In");
-      }
+      handleAddClick(item);
     } else if (actionType === "delete") {
-      const deleteItem = await docService.deleteCartItems(item?.$id);
-      if (deleteItem) {
-        dispatch(removeItems(item?.$id));
-      }
+      handleDeleteClick(item?.$id);
     }
   };
-
-  console.log("cartItems", cartItems);
 
   return (
     <div>

@@ -1,25 +1,8 @@
-import { useDispatch, useSelector } from "react-redux";
-import { clearCart } from "../../../../store/slices/cartSlice";
 import ItemList from "../../../body/resMenu/ItemList.jsx";
-import docService from "../../../../appwrite/docs.js";
+import useCart from "../../../../utils/useCart.js";
 
 const Cart = () => {
-  const isDarkMode = useSelector((state) => state.theme.darkMode);
-  const selectedItems = useSelector((state) => state.cart.items);
-  const userData = useSelector((state) => state.auth.userData);
-  const userId = userData?.$id;
-  const dispatch = useDispatch();
-  console.log(selectedItems);
-  const handleClearAll = async () => {
-    console.log(userId);
-    const allItems = await docService.showCartItems(userId);
-    for (let i = 0; i < allItems.documents.length; i++) {
-      const doc = allItems.documents[i];
-      await docService.deleteCartItems(doc.$id);
-    }
-
-    dispatch(clearCart());
-  };
+  const { isDarkMode, selectedItems, handleClearAll } = useCart();
 
   return (
     <div className={`text-center m-4 p-4 ${isDarkMode && "text-white"}`}>

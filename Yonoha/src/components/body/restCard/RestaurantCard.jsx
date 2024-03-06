@@ -7,9 +7,15 @@ const RestaurantCard = ({ resData }) => {
     resData?.info;
   const isDarkMode = useSelector((state) => state.theme.darkMode);
 
-  const bgColor = isDarkMode ? "bg-bgCard" : "bg-white";
-  const textColor = isDarkMode ? "text-white" : "text-gray-700";
-  const shadowColor = isDarkMode ? "shadow-2xl" : "shadow-md";
+  const bgColor = isDarkMode
+    ? "bg-bgCard transition duration-500"
+    : "bg-white transition duration-500";
+  const textColor = isDarkMode
+    ? "text-white transition duration-500"
+    : "text-gray-700 transition duration-500";
+  const shadowColor = isDarkMode
+    ? "shadow-2xl transition duration-500"
+    : "shadow-md transition duration-500";
 
   return (
     <div

@@ -23,7 +23,7 @@ const RestaurantCategory = ({ data, showItems, setShowIndex }) => {
           onClick={handleClick}
         >
           <span className="font-bold text-lg">
-            {data.title} ({data.itemCards.length})
+            {data?.title} ({data?.itemCards?.length})
           </span>
           <span className="text-xl">⬇️</span>
         </div>

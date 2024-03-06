@@ -4,25 +4,23 @@ import Shimmer from "./restCard/Shimmer";
 import { Link } from "react-router-dom";
 import useRestaurantData from "../../utils/useRestaurantData";
 import useOnlineStatus from "../../utils/useOnlineStatus";
-import { useSelector } from "react-redux";
 
 const Body = () => {
   const [searchText, setSearchText] = useState("");
   const RestaurantCardLabel = isOpenLable(RestaurantCard);
-  const { resDataList, filteredList, setFilteredList, setResDataList } =
-    useRestaurantData();
+  const {
+    resDataList,
+    filteredList,
+    setFilteredList,
+    setResDataList,
+    bgColor,
+    cardColor,
+    textColor,
+    buttonColor,
+    inputColor,
+  } = useRestaurantData();
   const onlineStatus = useOnlineStatus();
-  const isDarkMode = useSelector((state) => state.theme.darkMode);
 
-  const bgColor = isDarkMode ? "bg-htmlColor" : "bg-gray-100";
-  const cardColor = isDarkMode ? "bg-bgCard" : "bg-white";
-  const textColor = isDarkMode ? "text-white" : "text-gray-700";
-  const inputColor = isDarkMode
-    ? "bg-gray-700 text-white"
-    : "bg-white text-gray-700";
-  const buttonColor = isDarkMode ? "bg-logoColor" : "bg-green-200";
-
-  console.log(resDataList);
   if (onlineStatus === false) {
     return <h1>Please check your internet connection</h1>;
   }
