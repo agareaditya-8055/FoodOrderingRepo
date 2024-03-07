@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import authService from "../appwrite/auth";
 import { login as authLogin } from "../store/slices/authSlice";
+import { setAlert } from "../store/slices/alertSlice";
 
 export const useSignupForm = () => {
   const dispatch = useDispatch();
@@ -27,12 +28,19 @@ export const useSignupForm = () => {
         const userData = await authService.createAccount(formState);
 
         if (userData) {
+          dispatch(
+            setAlert({
+              message: "Account has been created successfully.",
+              type: "success",
+            })
+          );
           const userData = await authService.getCurrentUser();
           if (userData) dispatch(authLogin({ userData }));
           navigate("/");
         }
       } catch (error) {
-        console.error(error.message);
+        dispatch(setAlert({ message: error.message, type: "error" }));
+        console.log(error.message);
       }
     },
     [dispatch, formState, navigate]

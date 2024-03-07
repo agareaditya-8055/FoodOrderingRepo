@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { addItems, removeItems } from "../store/slices/cartSlice.js";
 import docService from "../appwrite/docs.js";
+import { setAlert } from "../store/slices/alertSlice.js";
 
 export const useItemList = () => {
   const isDarkMode = useSelector((state) => state.theme.darkMode);
@@ -34,8 +35,15 @@ export const useItemList = () => {
 
       if (createDocs) {
         dispatch(addItems(createDocs));
+        dispatch(
+          setAlert({
+            message: "Item has been added successfully.",
+            type: "success",
+          })
+        );
       }
     } else {
+      dispatch(setAlert({ message: "Please sign in.", type: "error" }));
       console.log("Please Sign In");
     }
   };
@@ -45,6 +53,12 @@ export const useItemList = () => {
 
     if (deleteItem) {
       dispatch(removeItems(itemId));
+      dispatch(
+        setAlert({
+          message: "Item has been removed successfully",
+          type: "success",
+        })
+      );
     }
   };
 

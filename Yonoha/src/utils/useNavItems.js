@@ -5,6 +5,7 @@ import { toggleDarkMode, toggleLightMode } from "../store/slices/themeSlice";
 import authService from "../appwrite/auth";
 import useOnlineStatus from "./useOnlineStatus";
 import { clearCart } from "../store/slices/cartSlice";
+import { setAlert } from "../store/slices/alertSlice";
 export const useNavItems = (navigate) => {
   const onlineStatus = useOnlineStatus();
   const cart = useSelector((state) => state.cart.items);
@@ -20,9 +21,16 @@ export const useNavItems = (navigate) => {
       if (logoutResponse) {
         dispatch(authLogout());
         dispatch(clearCart());
+        dispatch(
+          setAlert({
+            message: "User has successfully signed out.",
+            type: "signout",
+          })
+        );
         navigate("/signin");
       }
     } catch (error) {
+      dispatch(setAlert({ message: error, type: "error" }));
       console.error("Error signing out:", error);
     }
   }, [dispatch, navigate]);

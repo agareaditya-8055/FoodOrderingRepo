@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import docService from "../appwrite/docs";
 import { clearCart } from "../store/slices/cartSlice";
+import { setAlert } from "../store/slices/alertSlice";
 
 const useCart = () => {
   const isDarkMode = useSelector((state) => state.theme.darkMode);
@@ -16,6 +17,12 @@ const useCart = () => {
     }
 
     dispatch(clearCart());
+    dispatch(
+      setAlert({
+        message: "All item has been removed successfully",
+        type: "success",
+      })
+    );
   };
 
   return {
