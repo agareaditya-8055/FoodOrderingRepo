@@ -36,7 +36,7 @@ export class DocumentService {
         }
       );
     } catch (error) {
-      console.log("appwrite :: createCartitems :: error", error);
+      throw error;
     }
   }
 
@@ -48,7 +48,7 @@ export class DocumentService {
         [Query.equal("userId", userId)]
       );
     } catch (error) {
-      console.log("appwrite :: showCartItems :: error", error);
+      throw error;
     }
   }
 
@@ -60,7 +60,7 @@ export class DocumentService {
         itemId
       );
     } catch (error) {
-      console.log("appwrite :: showCartItems :: error", error);
+      throw error;
     }
   }
 }
