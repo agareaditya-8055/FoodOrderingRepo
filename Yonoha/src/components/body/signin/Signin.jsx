@@ -3,13 +3,15 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const Signin = () => {
-  const { formState, handleChange, handleSubmit } = useSigninForm();
-  const isDarkMode = useSelector((state) => state.theme.darkMode);
-  const cardColor = isDarkMode ? "bg-bgCard" : "bg-white";
-  const textColor = isDarkMode ? "text-white" : "text-gray-700";
-  const inputColor = isDarkMode
-    ? "bg-gray-700 text-white"
-    : "bg-white text-gray-700";
+  const {
+    formState,
+    handleChange,
+    handleSubmit,
+    isDarkMode,
+    cardColor,
+    textColor,
+    inputColor,
+  } = useSigninForm();
 
   return (
     <div

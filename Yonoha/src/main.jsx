@@ -5,17 +5,22 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import About from "./components/header/about/About";
 import Contact from "./components/header/contact/Contact";
 import Error from "./components/errorPage/Error";
-import Body from "./components/body/Body";
+// import Body from "./components/body/Body";
 import RestaurantMenu from "./components/body/resMenu/RestaurantMenu";
-import Cart from "./components/header/navItems/cart/Cart";
+// import Cart from "./components/header/navItems/cart/Cart";
 import { Provider } from "react-redux";
 import appStore from "./store/appStore";
 import Signin from "./components/body/signin/Signin";
 import Signup from "./components/body/signup/Signup";
+import Shimmer from "./components/body/restCard/Shimmer.jsx";
 
 const show = ReactDOM.createRoot(document.getElementById("root"));
 
+const Body = lazy(() => import("./components/body/Body"));
+
 const Grocery = lazy(() => import("./components/header/Grocery"));
+
+const Cart = lazy(() => import("./components/header/navItems/cart/Cart"));
 
 const appRoute = createBrowserRouter([
   {
@@ -24,7 +29,11 @@ const appRoute = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Body />,
+        element: (
+          <Suspense fallback={<Shimmer />}>
+            <Body />
+          </Suspense>
+        ),
       },
       {
         path: "/about",
@@ -48,7 +57,11 @@ const appRoute = createBrowserRouter([
       },
       {
         path: "/cart",
-        element: <Cart />,
+        element: (
+          <Suspense fallback={<h1>Loading.....</h1>}>
+            <Cart />
+          </Suspense>
+        ),
       },
       {
         path: "/signin",
