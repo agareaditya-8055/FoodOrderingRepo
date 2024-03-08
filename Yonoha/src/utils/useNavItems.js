@@ -19,14 +19,14 @@ export const useNavItems = (navigate) => {
     try {
       const logoutResponse = await authService.logout();
       if (logoutResponse) {
-        dispatch(authLogout());
-        dispatch(clearCart());
         dispatch(
           setAlert({
             message: "User has successfully signed out.",
             type: "signout",
           })
         );
+        dispatch(authLogout());
+        dispatch(clearCart());
         navigate("/signin");
       }
     } catch (error) {

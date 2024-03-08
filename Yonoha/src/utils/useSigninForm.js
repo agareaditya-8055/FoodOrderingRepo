@@ -29,16 +29,16 @@ export const useSigninForm = () => {
     try {
       const session = await authService.login(formState);
       if (session) {
-        dispatch(
-          setAlert({
-            message: "User has successfully signed in.",
-            type: "success",
-          })
-        );
         const userData = await authService.getCurrentUser();
         const userId = userData.$id;
         if (userData) {
           dispatch(authLogin({ userData }));
+          dispatch(
+            setAlert({
+              message: "User has successfully signed in.",
+              type: "success",
+            })
+          );
           const response = await docService.showCartItems(userId);
           const data = response?.documents;
           if (data) {

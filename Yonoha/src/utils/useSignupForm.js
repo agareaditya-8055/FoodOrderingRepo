@@ -26,17 +26,18 @@ export const useSignupForm = () => {
       e.preventDefault();
       try {
         const userData = await authService.createAccount(formState);
-
         if (userData) {
-          dispatch(
-            setAlert({
-              message: "Account has been created successfully.",
-              type: "success",
-            })
-          );
           const userData = await authService.getCurrentUser();
-          if (userData) dispatch(authLogin({ userData }));
-          navigate("/");
+          if (userData) {
+            dispatch(authLogin({ userData }));
+            dispatch(
+              setAlert({
+                message: "Account has been created successfully.",
+                type: "success",
+              })
+            );
+            navigate("/");
+          }
         }
       } catch (error) {
         dispatch(setAlert({ message: error.message, type: "error" }));
