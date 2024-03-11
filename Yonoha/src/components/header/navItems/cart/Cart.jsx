@@ -5,7 +5,7 @@ const Cart = () => {
   const { isDarkMode, selectedItems, handleClearAll } = useCart();
 
   return (
-    <div className={`text-center m-4 p-4 ${isDarkMode && "text-white"}`}>
+    <div className={`text-center m-4 mt-40 p-4 ${isDarkMode && "text-white"}`}>
       <h1 className="text-2xl font-bold">Cart</h1>
       <div className="w-6/12 m-auto">
         {selectedItems.length > 0 && (

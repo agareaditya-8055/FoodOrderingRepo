@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 const useRestaurantData = () => {
   const [resDataList, setResDataList] = useState([]);
   const [filteredList, setFilteredList] = useState([]);
+  const [title, setTitle] = useState("");
 
   const isDarkMode = useSelector((state) => state.theme.darkMode);
 
@@ -30,9 +31,15 @@ const useRestaurantData = () => {
     const data = await fetch(CARD_API);
     const json = await data.json();
 
+    const cardTitle =
+      json?.data?.cards[1]?.card?.card?.header?.title ||
+      "Top restaurant chains";
+
     const newResData =
       json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
         ?.restaurants;
+
+    setTitle(cardTitle);
 
     setResDataList(newResData);
     setFilteredList(newResData);
@@ -48,6 +55,7 @@ const useRestaurantData = () => {
     textColor,
     inputColor,
     buttonColor,
+    title,
   };
 };
 

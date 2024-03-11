@@ -14,7 +14,7 @@ const Alert = ({ message, type }) => {
   // Add the transition and transform classes to enable the sliding animation
   return (
     <div
-      className={`p-3 border-l-4 rounded-md ${colorClasses[alertType]} transition-all w-1/4 transform duration-500 ease-in-out fixed top-4 right-4`}
+      className={`p-3 border-l-4  rounded-md ${colorClasses[alertType]} transition-all w-1/4 transform duration-500 ease-in-out fixed top-28 right-1/3 z-10`}
       role="alert"
       // Use the data-te-animation attribute to specify the animation name and direction
       data-te-animation="slide-top"

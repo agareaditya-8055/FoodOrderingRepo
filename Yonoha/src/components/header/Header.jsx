@@ -7,7 +7,7 @@ const Header = () => {
   const isDarkMode = useSelector((state) => state.theme.darkMode);
   return (
     <div
-      className={`flex flex-col sm:flex-row justify-between items-center ${
+      className={`flex flex-col sm:flex-row justify-between items-center  fixed top-0 w-full z-50 ${
         isDarkMode
           ? "bg-bgCard text-white transition duration-500"
           : "bg-pink-50 border border-solid border-pink-100 transition duration-500"
