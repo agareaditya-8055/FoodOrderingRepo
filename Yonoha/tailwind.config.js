@@ -12,6 +12,7 @@ module.exports = {
     },
     extend: {
       colors: {
+        textColor: "#B3B3B3",
         htmlColor: "#202020",
         bgColor: "#1F4068",
         bgCard: "#323840",

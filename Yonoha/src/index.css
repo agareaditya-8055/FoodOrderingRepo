@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+html,
 .light {
   background-color: #e2e2e2;
   transition: background 0.5s;
@@ -11,85 +19,3 @@
   background-color: #202020;
   transition: background 0.5s;
 }
-
-/* 
-.header_container {
-  display: flex;
-  justify-content: space-between;
-  border: 1px solid grey;
-  padding: 0px 20px;
-}
-
-.navItems_container > ul {
-  display: flex;
-  list-style: none;
-  font-size: 20px;
-  align-items: center;
-}
-
-.navItems_container > ul > li {
-  padding: 10px;
-  margin: 10px;
-}
-
-.navItems_li a {
-  text-decoration: none;
-}
-
-.logo_container .logo {
-  height: 110px;
-  width: 110px;
-}
-
-.res_card {
-  width: 232px;
-  padding: 5px;
-  margin: 4px;
-  background-color: rgb(223, 213, 213);
-}
-
-.res_card .res_img {
-  height: 215px;
-  width: 100%;
-}
-
-.res_container {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.res_container a {
-  text-decoration: none;
-}
-
-.filter_btn {
-  margin: 10px;
-  cursor: pointer;
-}
-
-.shimmer-container {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.shimmer-card {
-  margin: 40px 4px;
-  width: 232px;
-  height: 400px;
-  background-color: #f0f0f0;
-}
-
-.login_btn {
-  padding: 0px 16px;
-  cursor: pointer;
-}
-
-.filter {
-  display: flex;
-  align-items: center;
-}
-
-.user-card {
-  padding: 5px;
-  border: 1px solid black;
-} */
