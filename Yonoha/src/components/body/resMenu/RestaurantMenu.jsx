@@ -32,7 +32,7 @@ const RestaurantMenu = () => {
 
   return (
     <div
-      className={`menu  m-6 p-5 text-center ${
+      className={`menu  m-6 p-5 text-center mt-28 ${
         isDarkMode
           ? "text-white bg-bgCard transition duration-500"
           : "text-black bg-gray-100 transition duration-500"

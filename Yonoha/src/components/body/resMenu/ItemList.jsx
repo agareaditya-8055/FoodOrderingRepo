@@ -17,13 +17,21 @@ const ItemList = ({ items, buttonContent, actionType }) => {
     <div>
       {items.map((item) => {
         const info = item?.card?.info || item;
+        console.log(info);
+
         const itemId = info.$id || info.id;
         const id = `${userId}${itemId}`;
 
         const { name, price, defaultPrice, description, imageId } = info;
-        const priceToShow = info === item ? price : price / 100;
+        const priceToShow =
+          typeof price === "number" ? price / 100 : Number(price);
         const defaultPriceToShow =
-          info === item ? defaultPrice : defaultPrice / 100;
+          typeof defaultPrice === "number"
+            ? defaultPrice / 100
+            : Number(defaultPrice);
+
+        console.log(" priceToShow  ", priceToShow);
+        console.log(" defaultPriceToShow  ", defaultPriceToShow);
 
         const isInCart = cartItems.some((cartItem) => cartItem?.$id === id);
 
