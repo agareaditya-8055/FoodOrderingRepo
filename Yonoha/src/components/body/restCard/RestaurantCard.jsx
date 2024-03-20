@@ -1,6 +1,7 @@
 import React from "react";
-import { CDN_URL } from "../../../utils/constants";
+
 import { useSelector } from "react-redux";
+import { CDN_URL } from "../../../utils/constants";
 
 const RestaurantCard = ({ resData }) => {
   const {

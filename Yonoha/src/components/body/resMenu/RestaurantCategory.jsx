@@ -12,9 +12,9 @@ const RestaurantCategory = ({ data, showItems, setShowIndex }) => {
     <div>
       {/* header */}
       <div
-        className={`w-1/2 mx-auto my-4 rounded-lg  p-4 ${
+        className={` my-4 rounded-lg  p-4 ${
           isDarkMode
-            ? "text-white bg-htmlColor transition duration-500"
+            ? "text-white bg-htmlColor border-teal-200 border-t transition duration-500"
             : "text-black bg-gray-100 shadow-lg transition duration-500 border-gray-700"
         }`}
       >

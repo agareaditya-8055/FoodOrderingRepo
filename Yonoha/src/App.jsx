@@ -10,7 +10,7 @@ import { addItems } from "./store/slices/cartSlice";
 
 import "./index.css";
 import Alert from "./components/Alert";
-import { setAlert } from "./store/slices/alertSlice";
+import Footer from "./components/footer/Footer";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -54,6 +54,7 @@ const App = () => {
       <Header />
       {alert.message && <Alert message={alert.message} type={alert.type} />}
       <Outlet />
+      <Footer />
     </>
   );
 };

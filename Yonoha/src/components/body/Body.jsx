@@ -4,10 +4,12 @@ import Shimmer from "./restCard/Shimmer";
 import { Link } from "react-router-dom";
 import useRestaurantData from "../../utils/useRestaurantData";
 import useOnlineStatus from "../../utils/useOnlineStatus";
+import { useSelector } from "react-redux";
 
 const Body = () => {
   const [searchText, setSearchText] = useState("");
   const RestaurantCardLabel = isOpenLable(RestaurantCard);
+  const isDarkMode = useSelector((state) => state.theme.darkMode);
   const {
     resDataList,
     filteredList,
@@ -18,6 +20,7 @@ const Body = () => {
     textColor,
     buttonColor,
     inputColor,
+    title,
   } = useRestaurantData();
   const onlineStatus = useOnlineStatus();
 
@@ -30,51 +33,74 @@ const Body = () => {
   return (
     <div className={`body ${bgColor}`}>
       <div
-        className={`filter flex items-center m-2 ${cardColor} rounded-lg shadow-md p-4`}
+        className={`filter  justify-center gap-x-[20px]  mt-28 flex items-center   ${cardColor} rounded-lg shadow-md p-4`}
       >
-        <div className={`search mx-4 my-1 px-4 py-1 ${textColor}`}>
-          <input
-            type="text"
-            className={`search_input search-m border border-solid border-gray-300 rounded-lg ${inputColor}`}
-            value={searchText}
-            onChange={(e) => setSearchText(e.target.value)}
-          />
-          <button
-            className={`search_btn search-m px-4 py-1 ${buttonColor} mx-2 rounded-lg`}
-            onClick={() => {
-              const filteredRestaurantList = resDataList?.filter((data) =>
-                data?.info?.name
-                  .toLowerCase()
-                  .includes(searchText.toLowerCase())
-              );
-              setFilteredList(filteredRestaurantList);
-            }}
-          >
-            Search
-          </button>
+        <div
+          className={`search flex flex-row items-center mx-4 my-1 px-4 py-1 ${textColor}`}
+        >
+          <div className="relative w-72 ">
+            <input
+              type="text"
+              placeholder="Search for restaurants, cuisines"
+              className={`search_input search-m border border-solid border-gray-300 w-full rounded-xl p-2 pl-[40px] text-[16px]  ${inputColor}`}
+              value={searchText}
+              onChange={(e) => {
+                const searchTextValue = e.target.value.toLowerCase();
+                setSearchText(searchTextValue);
+
+                if (searchTextValue === "") setFilteredList(resDataList);
+                else {
+                  const filteredRestaurantList = resDataList?.filter(
+                    (res) =>
+                      res.info.name.toLowerCase().includes(searchTextValue) ||
+                      res.info.cuisines.some((cuisine) =>
+                        cuisine.toLowerCase().includes(searchTextValue)
+                      )
+                  );
+                  setFilteredList(filteredRestaurantList);
+                }
+              }}
+            />
+            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+              <i
+                className="fa-solid fa-magnifying-glass"
+                style={{ color: "#939393" }}
+              ></i>
+            </div>
+          </div>
         </div>
+
         <button
-          className={`filter_btn px-4 py-1 ${buttonColor} rounded-lg`}
+          className={`filter_btn px-4 py-1 ${buttonColor} hover:bg-green-100 rounded-lg`}
           onClick={() => {
-            let newResdataList = resDataList.filter(
-              (data) => data?.info?.avgRating > 4.4
-            );
-            setResDataList(newResdataList);
+            let newResdataList = resDataList.filter((data) => {
+              return data?.info?.avgRating > 4.3;
+            });
+            setFilteredList(newResdataList);
           }}
         >
           Top Rated Restaurants
         </button>
       </div>
-      <div className="res_container flex flex-wrap justify-center gap-4 p-4">
-        {filteredList?.map((data) => (
-          <Link key={data.info.id} to={"/restaurants/" + data.info.id}>
-            {data.info.isOpen ? (
-              <RestaurantCardLabel resData={data} />
-            ) : (
-              <RestaurantCard resData={data} />
-            )}
-          </Link>
-        ))}
+      <div className="w-[calc(100%-10rem)] mx-40 p-4">
+        <h2
+          className={`food-menu-title my-10  text-3xl font-bold ${
+            isDarkMode && "text-textColor"
+          }`}
+        >
+          {title}
+        </h2>
+        <div className="res_container flex flex-wrap justify-start gap-4 p-4 ">
+          {filteredList?.map((data) => (
+            <Link key={data.info.id} to={"/restaurants/" + data.info.id}>
+              {data.info.isOpen ? (
+                <RestaurantCardLabel resData={data} />
+              ) : (
+                <RestaurantCard resData={data} />
+              )}
+            </Link>
+          ))}
+        </div>
       </div>
     </div>
   );
