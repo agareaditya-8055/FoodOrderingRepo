@@ -1,9 +1,16 @@
 import { CDN_URL } from "../../../utils/constants";
 import { useItemList } from "../../../utils/useItemList";
+import Loader from "../../Loader";
 
 const ItemList = ({ items, buttonContent, actionType }) => {
-  const { handleAddClick, handleDeleteClick, cartItems, isDarkMode, userId } =
-    useItemList();
+  const {
+    handleAddClick,
+    handleDeleteClick,
+    cartItems,
+    isDarkMode,
+    userId,
+    isLoading,
+  } = useItemList();
 
   const handleClick = (item) => {
     if (actionType === "add") {
@@ -15,67 +22,70 @@ const ItemList = ({ items, buttonContent, actionType }) => {
 
   return (
     <div>
-      {items.map((item) => {
-        const info = item?.card?.info || item;
-        console.log(info);
+      {isLoading && <Loader />}
 
-        const itemId = info.$id || info.id;
-        const id = `${userId}${itemId}`;
+      {!isLoading &&
+        items.map((item) => {
+          const info = item?.card?.info || item;
+          console.log(info);
 
-        const { name, price, defaultPrice, description, imageId } = info;
-        const priceToShow =
-          typeof price === "number" ? price / 100 : Number(price);
-        const defaultPriceToShow =
-          typeof defaultPrice === "number"
-            ? defaultPrice / 100
-            : Number(defaultPrice);
+          const itemId = info.$id || info.id;
+          const id = `${userId}${itemId}`;
 
-        console.log(" priceToShow  ", priceToShow);
-        console.log(" defaultPriceToShow  ", defaultPriceToShow);
+          const { name, price, defaultPrice, description, imageId } = info;
+          const priceToShow =
+            typeof price === "number" ? price / 100 : Number(price);
+          const defaultPriceToShow =
+            typeof defaultPrice === "number"
+              ? defaultPrice / 100
+              : Number(defaultPrice);
 
-        const isInCart = cartItems.some((cartItem) => cartItem?.$id === id);
+          console.log(" priceToShow  ", priceToShow);
+          console.log(" defaultPriceToShow  ", defaultPriceToShow);
 
-        return (
-          <div
-            key={id}
-            className={`flex rounded-lg justify-between py-2 my-2 relative px-2 ${
-              isDarkMode
-                ? "bg-bgCard text-white"
-                : "bg-gray-200 border-b-2 text-black shadow-lg"
-            }`}
-          >
-            <div className="flex flex-col text-start text-wrap w-3/4">
-              <span className="font-bold">{name}</span>
-              <span>₹ {priceToShow || defaultPriceToShow}</span>
-              <p
-                className={`text-sm ${
-                  isDarkMode ? "text-gray-400" : "text-gray-500"
-                } my-3`}
-              >
-                {description}
-              </p>
+          const isInCart = cartItems.some((cartItem) => cartItem?.$id === id);
+
+          return (
+            <div
+              key={id}
+              className={`flex rounded-lg justify-between py-2 my-2 relative px-2 ${
+                isDarkMode
+                  ? "bg-bgCard text-white"
+                  : "bg-gray-200 border-b-2 text-black shadow-lg"
+              }`}
+            >
+              <div className="flex flex-col text-start text-wrap w-3/4">
+                <span className="font-bold">{name}</span>
+                <span>₹ {priceToShow || defaultPriceToShow}</span>
+                <p
+                  className={`text-sm ${
+                    isDarkMode ? "text-gray-400" : "text-gray-500"
+                  } my-3`}
+                >
+                  {description}
+                </p>
+              </div>
+              <div className="w-1/4 flex justify-center">
+                <img
+                  className={imageId ? "w-3/4 rounded-lg" : "hidden"}
+                  src={CDN_URL + imageId}
+                  alt="dishImage"
+                />
+                <button
+                  className={`py-1 px-4 text-white bg-bgColor shadow-lg rounded-lg absolute bottom-2 ${
+                    isInCart && actionType === "add"
+                      ? "opacity-50 cursor-not-allowed"
+                      : ""
+                  }`}
+                  onClick={() => handleClick(info)}
+                  disabled={isInCart && actionType === "add"}
+                >
+                  {buttonContent}
+                </button>
+              </div>
             </div>
-            <div className="w-1/4 flex justify-center">
-              <img
-                className={imageId ? "w-3/4 rounded-lg" : "hidden"}
-                src={CDN_URL + imageId}
-                alt="dishImage"
-              />
-              <button
-                className={`py-1 px-4 text-white bg-bgColor shadow-lg rounded-lg absolute bottom-2 ${
-                  isInCart && actionType === "add"
-                    ? "opacity-50 cursor-not-allowed"
-                    : ""
-                }`}
-                onClick={() => handleClick(info)}
-                disabled={isInCart && actionType === "add"}
-              >
-                {buttonContent}
-              </button>
-            </div>
-          </div>
-        );
-      })}
+          );
+        })}
     </div>
   );
 };

@@ -1,14 +1,18 @@
 import ItemList from "../../../body/resMenu/ItemList.jsx";
 import useCart from "../../../../utils/useCart.js";
+import Loader from "../../../Loader.jsx";
 
 const Cart = () => {
-  const { isDarkMode, selectedItems, handleClearAll } = useCart();
+  const { isDarkMode, selectedItems, handleClearAll, isLoading } = useCart();
 
   return (
     <div className={`text-center m-4 mt-40 p-4 ${isDarkMode && "text-white"}`}>
+      {isLoading && <Loader />}
+
       <h1 className="text-2xl font-bold">Cart</h1>
+
       <div className="w-6/12 m-auto">
-        {selectedItems.length > 0 && (
+        {!isLoading && selectedItems.length > 0 && (
           <>
             <button
               className="m-2 p-2 bg-bgColor hover:bg-slate-700 text-white rounded-lg"
