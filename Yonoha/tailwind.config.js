@@ -11,6 +11,15 @@ module.exports = {
       "2xl": "1536px",
     },
     extend: {
+      animation: {
+        spin: "spin 2s linear infinite",
+      },
+      keyframes: {
+        spin: {
+          "0%": { transform: "rotate(0deg)" },
+          "100%": { transform: "rotate(360deg)" },
+        },
+      },
       colors: {
         textColor: "#B3B3B3",
         htmlColor: "#202020",
