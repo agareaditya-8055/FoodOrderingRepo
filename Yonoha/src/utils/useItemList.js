@@ -2,14 +2,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { addItems, removeItems } from "../store/slices/cartSlice.js";
 import docService from "../appwrite/docs.js";
 import { setAlert } from "../store/slices/alertSlice.js";
+import { useState } from "react";
 
 export const useItemList = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const isDarkMode = useSelector((state) => state.theme.darkMode);
   const cartItems = useSelector((state) => state.cart.items);
   const userId = useSelector((state) => state?.auth?.userData?.$id);
   const dispatch = useDispatch();
 
   const handleAddClick = async (item) => {
+    setIsLoading(true);
     const {
       id: cartItemId,
       name,
@@ -42,6 +45,7 @@ export const useItemList = () => {
           })
         );
       }
+      setIsLoading(false);
     } else {
       dispatch(setAlert({ message: "Please sign in.", type: "error" }));
       console.log("Please Sign In");
@@ -49,6 +53,7 @@ export const useItemList = () => {
   };
 
   const handleDeleteClick = async (itemId) => {
+    setIsLoading(true);
     const deleteItem = await docService.deleteCartItems(itemId);
 
     if (deleteItem) {
@@ -60,6 +65,7 @@ export const useItemList = () => {
         })
       );
     }
+    setIsLoading(false);
   };
 
   return {
@@ -68,5 +74,6 @@ export const useItemList = () => {
     cartItems,
     isDarkMode,
     userId,
+    isLoading,
   };
 };
