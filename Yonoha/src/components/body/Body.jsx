@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import useRestaurantData from "../../utils/useRestaurantData";
 import useOnlineStatus from "../../utils/useOnlineStatus";
 import { useSelector } from "react-redux";
+import noresult from "../../logos/no-results.png";
+import OfflinePage from "../OfflinePage";
 
 const Body = () => {
   const [searchText, setSearchText] = useState("");
@@ -24,9 +26,8 @@ const Body = () => {
   } = useRestaurantData();
   const onlineStatus = useOnlineStatus();
 
-  if (onlineStatus === false) {
-    return <h1>Please check your internet connection</h1>;
-  }
+  if (onlineStatus === false) return <OfflinePage />;
+
   if (resDataList?.length === 0) {
     return <Shimmer />;
   }
@@ -82,7 +83,7 @@ const Body = () => {
           Top Rated Restaurants
         </button>
       </div>
-      <div className="w-[calc(100%-10rem)] mx-40 p-4">
+      <div className="w-[calc(100%-20rem)]  mx-40  p-4 pl-11 ">
         <h2
           className={`food-menu-title my-10  text-3xl font-bold ${
             isDarkMode && "text-textColor"
@@ -90,17 +91,27 @@ const Body = () => {
         >
           {title}
         </h2>
-        <div className="res_container flex flex-wrap justify-start gap-4 p-4 ">
-          {filteredList?.map((data) => (
-            <Link key={data.info.id} to={"/restaurants/" + data.info.id}>
-              {data.info.isOpen ? (
-                <RestaurantCardLabel resData={data} />
-              ) : (
-                <RestaurantCard resData={data} />
-              )}
-            </Link>
-          ))}
-        </div>
+        {filteredList.length === 0 ? (
+          <div className="flex justify-center items-center m-32">
+            <img
+              className="w-80"
+              src={noresult}
+              alt="Search Results Are Finished - No Results Found Cartoon@clipartmax.com"
+            />
+          </div>
+        ) : (
+          <div className="res_container flex flex-wrap justify-start gap-4 p-4 ">
+            {filteredList?.map((data) => (
+              <Link key={data.info.id} to={"/restaurants/" + data.info.id}>
+                {data.info.isOpen ? (
+                  <RestaurantCardLabel resData={data} />
+                ) : (
+                  <RestaurantCard resData={data} />
+                )}
+              </Link>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
