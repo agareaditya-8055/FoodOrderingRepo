@@ -11,6 +11,9 @@ module.exports = {
       "2xl": "1536px",
     },
     extend: {
+      height: {
+        custom: "calc(100vh - 80px)",
+      },
       animation: {
         spin: "spin 2s linear infinite",
       },

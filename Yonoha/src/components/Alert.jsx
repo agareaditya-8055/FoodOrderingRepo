@@ -8,6 +8,7 @@ const Alert = ({ message, type }) => {
   const colorClasses = {
     success: "bg-green-100 border-green-400 text-green-700",
     error: "bg-red-100 border-red-400 text-red-700",
+    removed: "bg-red-100 border-red-400 text-red-700",
     signout: "bg-red-100 border-red-400 text-red-700",
   };
 
@@ -17,7 +18,7 @@ const Alert = ({ message, type }) => {
       className={`p-3 border-l-4  rounded-md ${colorClasses[alertType]} transition-all w-1/4 transform duration-500 ease-in-out fixed top-28 right-1/3 z-10`}
       role="alert"
       // Use the data-te-animation attribute to specify the animation name and direction
-      data-te-animation="slide-top"
+      data-te-animation="slide-bottom"
     >
       <p className="font-bold">{alertType.toUpperCase()}</p>
       <p>{message}</p>

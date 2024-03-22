@@ -61,7 +61,7 @@ export const useItemList = () => {
       dispatch(
         setAlert({
           message: "Item has been removed successfully",
-          type: "success",
+          type: "removed",
         })
       );
     }
