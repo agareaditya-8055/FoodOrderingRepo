@@ -1,11 +1,35 @@
 import ItemList from "../../../body/resMenu/ItemList.jsx";
 import useCart from "../../../../utils/useCart.js";
 import Loader from "../../../Loader.jsx";
-
+import { Link } from "react-router-dom";
 const Cart = () => {
   const { isDarkMode, selectedItems, handleClearAll, isLoading } = useCart();
 
-  return (
+  return selectedItems.length === 0 ? (
+    <div
+      className={`empty-cart h-custom flex flex-col items-center justify-center ${
+        isDarkMode ? "text-gray-400" : "text-gray-500"
+      }`}
+    >
+      <img
+        className="w-[271px] h-[256px]"
+        src="https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto/2xempty_cart_yfxml0"
+        alt=""
+      />
+      <h3 className="mt-6 text-lg font-semibold text-gray-700">
+        Your cart is empty
+      </h3>
+      <p className="mt-2 text-gray-600">
+        You can go to home page to view more restaurants
+      </p>
+      <Link
+        className=" mt-6 cursor-pointer font-inherit text-xs font-bold text-white bg-red-500 hover:bg-red-700  rounded-full outline-none  p-2 "
+        to={"/"}
+      >
+        <span>SEE RESTAURANTS NEAR YOU</span>
+      </Link>
+    </div>
+  ) : (
     <div className={`text-center m-4 mt-40 p-4 ${isDarkMode && "text-white"}`}>
       {isLoading && <Loader />}
 
@@ -27,7 +51,6 @@ const Cart = () => {
             />
           </>
         )}
-        {selectedItems.length === 0 && <h1>No items are added</h1>}
       </div>
     </div>
   );
