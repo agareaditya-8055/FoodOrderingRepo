@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useNavItems } from "../../../utils/useNavItems";
+
 const NavItems = () => {
   const navigate = useNavigate();
   const {
@@ -14,15 +15,33 @@ const NavItems = () => {
   } = useNavItems(navigate);
 
   const navItems = [
-    { label: name, className: "px-4 font-bold text-lg" },
+    {
+      label: name,
+      icon: ` ${name && "fa fa-user mr-1"}`,
+      className: "px-4 font-bold text-lg",
+    },
     {
       label: `Online Status : ${onlineStatus ? "✅" : "❎"}`,
       className: "px-4 font-bold text-lg",
     },
-    { label: "Home", link: "/", className: "px-4 font-bold text-lg" },
-    { label: "About", link: "/about", className: "px-4 font-bold text-lg" },
-    { label: "Contact", link: "/contact", className: "px-4 font-bold text-lg" },
-    { label: "Grocery", link: "/grocery", className: "px-4 font-bold text-lg" },
+    {
+      label: "Home",
+      icon: "fa fa-house mr-1",
+      link: "/",
+      className: "px-4 font-bold text-lg",
+    },
+    {
+      label: "About",
+      icon: "fa fa-circle-info mr-1",
+      link: "/about",
+      className: "px-4 font-bold text-lg",
+    },
+    {
+      label: "Contact",
+      icon: "fa-solid fa-envelope mr-1",
+      link: "/contact",
+      className: "px-4 font-bold text-lg",
+    },
   ];
 
   return (
@@ -30,6 +49,7 @@ const NavItems = () => {
       <ul className="flex p-3 m-3">
         {navItems.map((item, index) => (
           <li key={index} className={item.className}>
+            {item.icon && <i className={item.icon}></i>}
             {item.link ? <Link to={item.link}>{item.label}</Link> : item.label}
           </li>
         ))}
@@ -43,24 +63,30 @@ const NavItems = () => {
         </li>
         {name ? (
           <button
-            className="login_btn px-4 py-1 bg-green-200 rounded-lg font-bold"
+            className="login_btn px-4 py-1 bg-green-200 text-black rounded-lg font-bold"
             onClick={handleSignout}
           >
             Sign Out
           </button>
         ) : (
           <button
-            className="login_btn px-4 py-1 bg-green-200 rounded-lg font-bold"
+            className="login_btn px-4 py-1 bg-green-200 text-black rounded-lg font-bold"
             onClick={handleSignin}
           >
             Sign In
           </button>
         )}
         <button
-          className="px-4 font-bold text-lg"
+          className={`px-4 font-bold text-lg  rounded-lg ml-2 ${
+            isDarkMode ? "border-2 border-white" : " border-2 border-slate-900"
+          }`}
           onClick={handleDarkModeToggle}
         >
-          {isDarkMode ? "🌕" : "🌑"}
+          {isDarkMode ? (
+            <i className="fas fa-sun"></i>
+          ) : (
+            <i className="fas fa-moon"></i>
+          )}
         </button>
       </ul>
     </div>
