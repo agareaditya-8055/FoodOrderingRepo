@@ -6,7 +6,7 @@ import useRestaurantMenu from "../../../utils/useRestaurantMenu";
 import RestaurantCategory from "./RestaurantCategory";
 import { useSelector } from "react-redux";
 const RestaurantMenu = () => {
-  const [showIndex, setShowIndex] = useState(null);
+  const [showIndex, setShowIndex] = useState(0);
   const { resId } = useParams();
 
   const isDarkMode = useSelector((state) => state.theme.darkMode);
@@ -19,7 +19,6 @@ const RestaurantMenu = () => {
   if (resMenuData === null) {
     return <Shimmer />;
   }
-  console.log(resMenuData);
 
   const {
     name,
@@ -40,7 +39,7 @@ const RestaurantMenu = () => {
 
   return (
     <div
-      className={`menu   m-6 p-5  text-center  mt-28  ${
+      className={`   m-6 p-5  text-center  mt-28  ${
         isDarkMode
           ? "text-white bg-bgCard transition duration-500"
           : "text-black bg-gray-100 transition duration-500"
@@ -57,13 +56,13 @@ const RestaurantMenu = () => {
           </p>
         </div>
         <div
-          className={`rating w-21 h-16 flex flex-col justify-around p-2 rounded-lg shadow-lg ${
+          className={` w-21 h-16 flex flex-col justify-around p-2 rounded-lg shadow-lg ${
             isDarkMode
               ? "text-white bg-htmlColor border border-slate-600 transition duration-500"
               : "text-black bg-gray-100 border border-gray-300 transition duration-500"
           }`}
         >
-          <div className={`rating-top flex items-center gap-2 `}>
+          <div className={` flex items-center gap-2 `}>
             <i className="fa-solid fa-star text-green-600"></i>
             <p className="text-xs">{avgRating}</p>
           </div>
