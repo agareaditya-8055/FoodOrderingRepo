@@ -1,8 +1,10 @@
 import { CDN_URL } from "../../../utils/constants";
 import { useItemList } from "../../../utils/useItemList";
 import Loader from "../../Loader";
+import { useSelector } from "react-redux";
 
 const ItemList = ({ items, buttonContent, actionType }) => {
+  const user = useSelector((state) => state.auth.status);
   const {
     handleAddClick,
     handleDeleteClick,
@@ -22,12 +24,11 @@ const ItemList = ({ items, buttonContent, actionType }) => {
 
   return (
     <div>
-      {isLoading && <Loader />}
+      {isLoading && user === true && <Loader />}
 
       {!isLoading &&
         items.map((item) => {
           const info = item?.card?.info || item;
-          console.log(info);
 
           const itemId = info.$id || info.id;
           const id = `${userId}${itemId}`;
@@ -39,9 +40,6 @@ const ItemList = ({ items, buttonContent, actionType }) => {
             typeof defaultPrice === "number"
               ? defaultPrice / 100
               : Number(defaultPrice);
-
-          console.log(" priceToShow  ", priceToShow);
-          console.log(" defaultPriceToShow  ", defaultPriceToShow);
 
           const isInCart = cartItems.some((cartItem) => cartItem?.$id === id);
 

@@ -45,3 +45,41 @@ html,
     transform: translateX(100%);
   }
 }
+
+.About-container {
+  margin: 20px auto;
+  max-width: 800px;
+  margin-top: 150px;
+}
+
+.About-container h1 {
+  margin: 20px 0px;
+}
+
+.acordian {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.FAQ-container {
+  border: 1px solid gray;
+  border-radius: 8px;
+  width: calc(100% - 40px);
+  height: fit-content;
+  margin: 10px 0px;
+  padding: 10px;
+}
+
+.FAQ-container .category-header {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.FAQ-des {
+  border-top: 1px solid #0000002a;
+  width: 100%;
+  transition: all 0.6s cubic-bezier(0.215, 0.61, 0.355, 1);
+  overflow: hidden;
+  padding: 10px 0;
+}

@@ -18,35 +18,33 @@ const NavItems = () => {
     {
       label: name,
       icon: ` ${name && "fa fa-user mr-1"}`,
-      className: "px-4 font-bold text-lg",
+      className: "px-4  text-lg",
     },
     {
       label: `Online Status : ${onlineStatus ? "✅" : "❎"}`,
-      className: "px-4 font-bold text-lg",
+      className: "px-4  text-lg",
     },
     {
       label: "Home",
       icon: "fa fa-house mr-1",
       link: "/",
-      className: "px-4 font-bold text-lg",
+      className: "px-4  text-lg",
     },
     {
       label: "About",
       icon: "fa fa-circle-info mr-1",
       link: "/about",
-      className: "px-4 font-bold text-lg",
-    },
-    {
-      label: "Contact",
-      icon: "fa-solid fa-envelope mr-1",
-      link: "/contact",
-      className: "px-4 font-bold text-lg",
+      className: "px-4  text-lg",
     },
   ];
 
   return (
     <div className="navItems_container">
-      <ul className="flex p-3 m-3">
+      <ul
+        className={`flex p-3 m-4 ${
+          isDarkMode ? "text-textColor" : "text-bgCard"
+        }`}
+      >
         {navItems.map((item, index) => (
           <li key={index} className={item.className}>
             {item.icon && <i className={item.icon}></i>}
