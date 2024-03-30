@@ -54,7 +54,7 @@ const RestaurantCard = ({ resData }) => {
     >
       <div className="Food-item-margin p-2">
         <span className="Food-item-link block relative cursor-pointer no-underline">
-          <div className="card-img relative max-w-full w-[328.]4 h-[248] overflow-hidden rounded-2xl cursor-pointer ">
+          <div className="card-img relative max-w-full w-[328.4] h-[248] overflow-hidden rounded-2xl cursor-pointer ">
             <img
               className="w-full h-full rounded-[inherit] object-cover transition duration-250 ease-in-out transform hover:scale-125 "
               src={CDN_URL + cloudinaryImageId}
