@@ -12,6 +12,12 @@ const RestaurantMenu = () => {
   const isDarkMode = useSelector((state) => state.theme.darkMode);
   const resMenuData = useRestaurantMenu(resId);
 
+  const menuData = resMenuData?.cards?.find(
+    (card) =>
+      card?.card?.card?.["@type"] ===
+      "type.googleapis.com/swiggy.presentation.food.v2.Restaurant"
+  );
+
   const onShowIndexChange = useCallback((index) => {
     setShowIndex((prevIndex) => (prevIndex === index ? null : index));
   }, []);
@@ -28,10 +34,14 @@ const RestaurantMenu = () => {
     avgRating,
     locality,
     sla,
-  } = resMenuData?.cards[2]?.card?.card?.info;
+  } = menuData?.card?.card?.info;
+
+  const categoriesData = resMenuData?.cards.find(
+    (card) => card.groupedCard !== undefined
+  );
 
   const categories =
-    resMenuData?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards.filter(
+    categoriesData?.groupedCard?.cardGroupMap?.REGULAR?.cards.filter(
       (c) =>
         c?.card?.card?.["@type"] ===
         "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"

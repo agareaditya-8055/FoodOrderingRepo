@@ -31,13 +31,16 @@ const useRestaurantData = () => {
     const data = await fetch(CARD_API);
     const json = await data.json();
 
+    const card = json?.data?.cards.find(
+      (card) =>
+        card?.card?.card?.gridElements?.infoWithStyle?.collectionId === "84124"
+    );
+
     const cardTitle =
-      json?.data?.cards[1]?.card?.card?.header?.title ||
-      "Top restaurant chains";
+      card?.card?.card?.header?.title || "Top restaurant chains";
 
     const newResData =
-      json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
-        ?.restaurants;
+      card?.card?.card?.gridElements?.infoWithStyle?.restaurants;
 
     setTitle(cardTitle);
 
