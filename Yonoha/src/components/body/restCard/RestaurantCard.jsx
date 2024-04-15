@@ -46,7 +46,7 @@ const RestaurantCard = ({ resData }) => {
     // </div>
 
     <div
-      className={`Food-item w-[350px] h-[365px] mb-[20px] hover:rounded-xl ${
+      className={`Food-item w-[250px] h-[265px] xs:w-[300px] xs:h[315px] mb-[20px] hover:rounded-xl sm:w-[280px] sm:h-[295px] md:w-[250px] md:h-[265px] lg:w-[320px] lg:h-[335px]  xl:w-[350px] xl:h-[365px] ${
         isDarkMode
           ? "text-textColor hover:bg-bgCard"
           : "hover:border hover:border-white  hover:bg-white"
@@ -54,7 +54,7 @@ const RestaurantCard = ({ resData }) => {
     >
       <div className="Food-item-margin p-2">
         <span className="Food-item-link block relative cursor-pointer no-underline">
-          <div className="card-img relative max-w-full w-[328.4] h-[248] overflow-hidden rounded-2xl cursor-pointer ">
+          <div className="card-img relative max-w-full w-[228.4px] h-[198px]  overflow-hidden rounded-2xl cursor-pointer xs:w-[278.4px] xs:[h-198px] sm:w-[258.4px] sm:h-[178px] md:w-[228.4px] md:h-[148px] lg:w-[298.4px] lg:h-[218px] xl:w-[328.4px] xl:h-[248px]">
             <img
               className="w-full h-full rounded-[inherit] object-cover transition duration-250 ease-in-out transform hover:scale-125 "
               src={CDN_URL + cloudinaryImageId}

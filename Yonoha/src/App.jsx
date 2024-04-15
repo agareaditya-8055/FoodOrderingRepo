@@ -52,6 +52,7 @@ const App = () => {
   return (
     <>
       {alert.message && <Alert message={alert.message} type={alert.type} />}
+
       <Header />
       <Outlet />
       <Footer />

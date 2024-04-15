@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useNavItems } from "../../../utils/useNavItems";
 
 const NavItems = () => {
+  const [open, setOpen] = useState(false);
+
   const navigate = useNavigate();
   const {
     onlineStatus,
@@ -16,66 +18,78 @@ const NavItems = () => {
 
   const navItems = [
     {
-      label: name,
-      icon: ` ${name && "fa fa-user mr-1"}`,
-      className: "px-4  text-lg",
+      label: `Online Status : ${onlineStatus ? "✅" : "❎"}`,
     },
     {
-      label: `Online Status : ${onlineStatus ? "✅" : "❎"}`,
-      className: "px-4  text-lg",
+      label: name,
+      icon: ` ${name && "fa fa-user mr-1"}`,
     },
     {
       label: "Home",
       icon: "fa fa-house mr-1",
       link: "/",
-      className: "px-4  text-lg",
     },
     {
       label: "About",
       icon: "fa fa-circle-info mr-1",
       link: "/about",
-      className: "px-4  text-lg",
     },
   ];
 
   return (
-    <div className="navItems_container">
+    <div className="navItems_container ">
+      <div
+        className="text-3xl absolute right-8 top-6 lg:hidden cursor-pointer"
+        onClick={() => setOpen(!open)}
+      >
+        {open ? <span>&#10005;</span> : <span>&#9776;</span>}
+      </div>
       <ul
-        className={`flex p-3 m-4 ${
-          isDarkMode ? "text-textColor" : "text-bgCard"
+        className={`lg:flex lg:items-center  pl-7 lg:pl-0 lg:mt-0 lg:pb-0 pb-8 absolute lg:static lg:z-auto left-0 w-full lg:w-auto z-[1] transition-all duration-500 ease-in ${
+          open ? "top-20" : "top-[-490px]"
+        }  ${
+          isDarkMode
+            ? "text-textColor bg-bgCard transition duration-500"
+            : "text-bgCard bg-pink-50 transition duration-500"
         }`}
       >
         {navItems.map((item, index) => (
-          <li key={index} className={item.className}>
+          <li
+            key={index}
+            className="lg:mr-4 my-5 lg:my-0 lg:text-lg lg:font-semibold  "
+          >
             {item.icon && <i className={item.icon}></i>}
             {item.link ? <Link to={item.link}>{item.label}</Link> : item.label}
           </li>
         ))}
-        <li className="px-4 font-semibold text-2xl relative">
+
+        <li className=" my-5 lg:mr-2 lg:my-0 base:flex base:items-center font-semibold  relative">
           <Link to="/cart">
-            🛒{" "}
-            <div className="text-xs text-white bg-black h-4 flex w-4 justify-center items-center absolute right-5 bottom-4 rounded-full">
-              <span className="">{cart.length}</span>
+            <div className="w-16 flex justify-between items-center rounded-lg  bg-yellow-500 px-2 py-1 text-white">
+              <i className="fa-solid fa-cart-shopping "></i>
+              <div className="rounded-full bg-white w-5 h-5 flex items-center justify-center">
+                <span className="text-yellow-500">{cart.length}</span>
+              </div>
             </div>
           </Link>
         </li>
         {name ? (
           <button
-            className="login_btn px-4 py-1 bg-green-200 text-black rounded-lg font-bold"
+            className="login_btn my-5 lg:my-0 px-4 py-1 bg-green-200 text-black rounded-lg font-bold"
             onClick={handleSignout}
           >
             Sign Out
           </button>
         ) : (
           <button
-            className="login_btn px-4 py-1 bg-green-200 text-black rounded-lg font-bold"
+            className="login_btn my-5 lg:my-0 px-4 py-1 bg-green-200 text-black rounded-lg font-bold"
             onClick={handleSignin}
           >
             Sign In
           </button>
         )}
         <button
-          className={`px-4 font-bold text-lg  rounded-lg ml-2 ${
+          className={`px-4 font-bold text-lg my-5 lg:my-0  rounded-lg ml-2 ${
             isDarkMode ? "border-2 border-white" : " border-2 border-slate-900"
           }`}
           onClick={handleDarkModeToggle}
