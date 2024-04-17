@@ -15,7 +15,7 @@ const Signin = () => {
 
   return (
     <div
-      className={`flex flex-col justify-center items-center h-screen ${
+      className={`flex flex-col justify-center  items-center h-screen ${
         isDarkMode && "bg-htmlColor"
       }`}
     >

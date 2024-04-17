@@ -2,7 +2,7 @@ const Footer = () => {
   return (
     <>
       <footer className="w-full bg-gray-900 flex justify-center md_sm:w-full lg:px-2 px-3 text-white overflow-hidden">
-        <div className="  py-12 px-0 w-full">
+        <div className=" px-5  py-12  w-full">
           <section className="flex items-center justify-between w-full mb-8">
             <span className="text-logoColor text-4xl font-bold mb-2 sm:mb-0">
               YONOHA

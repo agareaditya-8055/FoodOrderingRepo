@@ -7,7 +7,7 @@ const Cart = () => {
 
   return selectedItems.length === 0 ? (
     <div
-      className={`empty-cart h-custom flex flex-col items-center justify-center ${
+      className={`empty-cart w-screen h-screen border border-black flex flex-col items-center justify-center ${
         isDarkMode ? "text-gray-400" : "text-gray-500"
       }`}
     >
@@ -30,12 +30,12 @@ const Cart = () => {
       </Link>
     </div>
   ) : (
-    <div className={`text-center m-4 mt-40 p-4 ${isDarkMode && "text-white"}`}>
+    <div className={`text-center m-4  mt-40 p-4 ${isDarkMode && "text-white"}`}>
       {isLoading && <Loader />}
 
       <h1 className="text-2xl font-bold">Cart</h1>
 
-      <div className="w-6/12 m-auto">
+      <div className=" m-auto">
         {!isLoading && selectedItems.length > 0 && (
           <>
             <button
