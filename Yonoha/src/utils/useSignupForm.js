@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import authService from "../appwrite/auth";
 import { login as authLogin } from "../store/slices/authSlice";
-import { setAlert } from "../store/slices/alertSlice";
+import { toast } from "react-toastify";
 
 export const useSignupForm = () => {
   const dispatch = useDispatch();
@@ -30,18 +30,12 @@ export const useSignupForm = () => {
           const userData = await authService.getCurrentUser();
           if (userData) {
             dispatch(authLogin({ userData }));
-            dispatch(
-              setAlert({
-                message: "Account has been created successfully.",
-                type: "success",
-              })
-            );
+            toast.success("Account has been created successfully !");
             navigate("/");
           }
         }
       } catch (error) {
-        dispatch(setAlert({ message: error.message, type: "error" }));
-        console.log(error.message);
+        toast.error(error.message);
       }
     },
     [dispatch, formState, navigate]

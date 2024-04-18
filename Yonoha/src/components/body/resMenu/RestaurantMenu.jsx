@@ -49,13 +49,13 @@ const RestaurantMenu = () => {
 
   return (
     <div
-      className={`   m-6 p-5  text-center  mt-28  ${
+      className={`   m-6 p-5  text-center  mt-28 flex flex-col items-center ${
         isDarkMode
           ? "text-white bg-bgCard transition duration-500"
           : "text-black bg-gray-100 transition duration-500"
       }`}
     >
-      <div className={`flex justify-between mx-auto my-4 p-1 w-1/2 `}>
+      <div className={`flex justify-between my-4 p-1 w-full max-w-2xl `}>
         <div className="flex flex-col  ">
           <h2 className="font-bold text-left text-2xl my-2 ">{name}</h2>
           <p className="font-normal text-left text-base text-gray-400 ">
@@ -66,7 +66,7 @@ const RestaurantMenu = () => {
           </p>
         </div>
         <div
-          className={` w-21 h-16 flex flex-col justify-around p-2 rounded-lg shadow-lg ${
+          className={` w-20 h-16 flex flex-col justify-around p-2 rounded-lg shadow-lg ${
             isDarkMode
               ? "text-white bg-htmlColor border border-slate-600 transition duration-500"
               : "text-black bg-gray-100 border border-gray-300 transition duration-500"
@@ -82,7 +82,7 @@ const RestaurantMenu = () => {
         </div>
       </div>
       <div
-        className={` mx-auto my-4 w-1/2 ${
+        className={`  my-4  flex flex-col w-full max-w-2xl  ${
           isDarkMode
             ? " border-teal-700 border-t-4 transition duration-500"
             : "border-teal-200 border-t-4 transition duration-500"

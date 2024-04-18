@@ -28,24 +28,29 @@ const useRestaurantData = () => {
   }, []);
 
   const fetchData = async () => {
-    const data = await fetch(CARD_API);
-    const json = await data.json();
+    try {
+      const response = await fetch(CARD_API);
 
-    const card = json?.data?.cards.find(
-      (card) =>
-        card?.card?.card?.gridElements?.infoWithStyle?.collectionId === "84124"
-    );
+      const json = await response.json();
 
-    const cardTitle =
-      card?.card?.card?.header?.title || "Top restaurant chains";
+      const card = json?.data?.cards.find(
+        (card) =>
+          card?.card?.card?.gridElements?.infoWithStyle?.collectionId ===
+          "84124"
+      );
 
-    const newResData =
-      card?.card?.card?.gridElements?.infoWithStyle?.restaurants;
+      const cardTitle =
+        card?.card?.card?.header?.title || "Top restaurant chains";
 
-    setTitle(cardTitle);
+      const newResData =
+        card?.card?.card?.gridElements?.infoWithStyle?.restaurants;
 
-    setResDataList(newResData);
-    setFilteredList(newResData);
+      setTitle(cardTitle);
+      setResDataList(newResData);
+      setFilteredList(newResData);
+    } catch (error) {
+      console.error("Failed to fetch data: ", error);
+    }
   };
 
   return {

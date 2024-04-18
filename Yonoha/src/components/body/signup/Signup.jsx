@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useSignupForm } from "../../../utils/useSignupForm";
 import { useSelector } from "react-redux";
+import { InfinitySpin } from "react-loader-spinner";
 
 const Signup = () => {
   const { formState, handleChange, handleSubmit } = useSignupForm();
@@ -77,12 +78,17 @@ const Signup = () => {
           />
         </div>
         <div className="flex items-center justify-between">
-          <button
-            type="submit"
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-          >
-            Sign Up
-          </button>
+          {isLoading ? (
+            <InfinitySpin />
+          ) : (
+            <button
+              type="submit"
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            >
+              Sign Up
+            </button>
+          )}
+
           <span className={`text-gray-600 text-sm ${textColor}`}>
             Already have an account?{" "}
             <Link to="/signin" className="text-blue-500 hover:text-blue-800">

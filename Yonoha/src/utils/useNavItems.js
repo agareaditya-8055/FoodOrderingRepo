@@ -5,7 +5,7 @@ import { toggleDarkMode, toggleLightMode } from "../store/slices/themeSlice";
 import authService from "../appwrite/auth";
 import useOnlineStatus from "./useOnlineStatus";
 import { clearCart } from "../store/slices/cartSlice";
-import { setAlert } from "../store/slices/alertSlice";
+import { toast } from "react-toastify";
 export const useNavItems = (navigate) => {
   const onlineStatus = useOnlineStatus();
   const cart = useSelector((state) => state.cart.items);
@@ -19,19 +19,13 @@ export const useNavItems = (navigate) => {
     try {
       const logoutResponse = await authService.logout();
       if (logoutResponse) {
-        dispatch(
-          setAlert({
-            message: "User has successfully signed out.",
-            type: "signout",
-          })
-        );
         dispatch(authLogout());
         dispatch(clearCart());
+        toast.error("User has successfully signed out !");
         navigate("/signin");
       }
     } catch (error) {
-      dispatch(setAlert({ message: error, type: "error" }));
-      console.error("Error signing out:", error);
+      toast.error(error.message);
     }
   }, [dispatch, navigate]);
 

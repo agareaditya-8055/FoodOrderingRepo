@@ -8,7 +8,12 @@ import { useSelector } from "react-redux";
 import noresult from "../../logos/no-results.png";
 import OfflinePage from "../OfflinePage";
 
+// import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
+// import "react-toastify/dist/ReactToastify.css";
+
 const Body = () => {
+  const notify = () => toast.warning("Wow so easy!");
   const [searchText, setSearchText] = useState("");
   const RestaurantCardLabel = isOpenLable(RestaurantCard);
   const isDarkMode = useSelector((state) => state.theme.darkMode);
@@ -28,6 +33,9 @@ const Body = () => {
 
   if (onlineStatus === false) return <OfflinePage />;
 
+  // if (1+1 === 2 ) {
+  //   return <Shimmer />;
+  // }
   if (resDataList?.length === 0) {
     return <Shimmer />;
   }
@@ -81,6 +89,11 @@ const Body = () => {
           >
             Top Rated Restaurants
           </button>
+
+          <div>
+            <button onClick={notify}>Notify!</button>
+            {/* <ToastContainer /> */}
+          </div>
         </div>
       </div>
       <div className="flex items-center  justify-center">

@@ -1,71 +1,62 @@
 import { useDispatch, useSelector } from "react-redux";
 import { addItems, removeItems } from "../store/slices/cartSlice.js";
 import docService from "../appwrite/docs.js";
-import { setAlert } from "../store/slices/alertSlice.js";
-import { useState } from "react";
+import { toast } from "react-toastify";
 
 export const useItemList = () => {
-  const [isLoading, setIsLoading] = useState(false);
   const isDarkMode = useSelector((state) => state.theme.darkMode);
   const cartItems = useSelector((state) => state.cart.items);
   const userId = useSelector((state) => state?.auth?.userData?.$id);
   const dispatch = useDispatch();
-
   const handleAddClick = async (item) => {
-    setIsLoading(true);
-    const {
-      id: cartItemId,
-      name,
-      price,
-      defaultPrice,
-      description,
-      imageId,
-    } = item;
-    const id = `${userId}${cartItemId}`;
-    const priceString = (price / 100).toString();
-    const defaultpriceString = (defaultPrice / 100).toString();
-
-    if (userId) {
-      const createDocs = await docService.createCartItems({
-        id,
+    try {
+      const {
+        id: cartItemId,
         name,
-        price: priceString,
-        defaultPrice: defaultpriceString,
+        price,
+        defaultPrice,
         description,
         imageId,
-        userId,
-      });
+      } = item;
+      const id = `${userId}${cartItemId}`;
+      const priceString = (price / 100).toString();
+      const defaultpriceString = (defaultPrice / 100).toString();
 
-      if (createDocs) {
-        dispatch(addItems(createDocs));
-        dispatch(
-          setAlert({
-            message: "Item has been added successfully.",
-            type: "success",
-          })
-        );
+      if (userId) {
+        const createDocs = await docService.createCartItems({
+          id,
+          name,
+          price: priceString,
+          defaultPrice: defaultpriceString,
+          description,
+          imageId,
+          userId,
+        });
+
+        if (createDocs) {
+          dispatch(addItems(createDocs));
+          toast.success("Item has been added successfully !");
+        }
+      } else {
+        toast.error("Please sign in !");
+        console.log("Please Sign In");
       }
-      setIsLoading(false);
-    } else {
-      dispatch(setAlert({ message: "Please sign in.", type: "error" }));
-      console.log("Please Sign In");
+    } catch (error) {
+      toast.error(`An error occurred: ${error.message}`);
     }
   };
 
   const handleDeleteClick = async (itemId) => {
-    setIsLoading(true);
-    const deleteItem = await docService.deleteCartItems(itemId);
+    try {
+      const deleteItem = await docService.deleteCartItems(itemId);
 
-    if (deleteItem) {
-      dispatch(removeItems(itemId));
-      dispatch(
-        setAlert({
-          message: "Item has been removed successfully",
-          type: "removed",
-        })
-      );
+      if (deleteItem) {
+        dispatch(removeItems(itemId));
+        toast.error("Item has been removed successfully !");
+      }
+    } catch (error) {
+      toast.error(`An error occurred: ${error.message}`);
     }
-    setIsLoading(false);
   };
 
   return {
@@ -74,6 +65,5 @@ export const useItemList = () => {
     cartItems,
     isDarkMode,
     userId,
-    isLoading,
   };
 };

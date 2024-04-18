@@ -12,7 +12,8 @@ import { Provider } from "react-redux";
 import appStore from "./store/appStore";
 import Signin from "./components/body/signin/Signin";
 import Signup from "./components/body/signup/Signup";
-import Shimmer from "./components/body/restCard/Shimmer.jsx";
+import { Bounce, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const show = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -74,6 +75,12 @@ const appRoute = createBrowserRouter([
 
 show.render(
   <Provider store={appStore}>
+    <ToastContainer
+      position="top-center"
+      theme="colored"
+      autoClose={2500}
+      bodyClassName="toastBody"
+    />
     <RouterProvider router={appRoute} />
   </Provider>
 );

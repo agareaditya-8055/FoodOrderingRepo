@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useNavItems } from "../../../utils/useNavItems";
+// import { ToastContainer } from "react-toastify";
+// import "react-toastify/dist/ReactToastify.css";
 
 const NavItems = () => {
   const [open, setOpen] = useState(false);
@@ -38,6 +40,7 @@ const NavItems = () => {
 
   return (
     <div className="navItems_container ">
+      {/* <ToastContainer /> */}
       <div
         className="text-3xl absolute right-8 top-6 lg:hidden cursor-pointer"
         onClick={() => setOpen(!open)}
@@ -57,13 +60,17 @@ const NavItems = () => {
           <li
             key={index}
             className="lg:mr-4 my-5 lg:my-0 lg:text-lg lg:font-semibold  "
+            onClick={() => setOpen(false)}
           >
             {item.icon && <i className={item.icon}></i>}
             {item.link ? <Link to={item.link}>{item.label}</Link> : item.label}
           </li>
         ))}
 
-        <li className=" my-5 lg:mr-2 lg:my-0 base:flex base:items-center font-semibold  relative">
+        <li
+          className=" my-5 lg:mr-2 lg:my-0 base:flex base:items-center font-semibold  relative"
+          onClick={() => setOpen(false)}
+        >
           <Link to="/cart">
             <div className="w-16 flex justify-between items-center rounded-lg  bg-yellow-500 px-2 py-1 text-white">
               <i className="fa-solid fa-cart-shopping "></i>

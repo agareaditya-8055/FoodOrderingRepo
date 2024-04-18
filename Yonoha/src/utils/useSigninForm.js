@@ -5,8 +5,9 @@ import authService from "../appwrite/auth";
 import { useNavigate } from "react-router-dom";
 import docService from "../appwrite/docs";
 import { addItems } from "../store/slices/cartSlice";
-import { setAlert } from "../store/slices/alertSlice";
+import { toast } from "react-toastify";
 export const useSigninForm = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
   const [formState, setFormState] = useState({
     email: "",
@@ -26,6 +27,7 @@ export const useSigninForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     try {
       const session = await authService.login(formState);
       if (session) {
@@ -33,12 +35,7 @@ export const useSigninForm = () => {
         const userId = userData.$id;
         if (userData) {
           dispatch(authLogin({ userData }));
-          dispatch(
-            setAlert({
-              message: "User has successfully signed in.",
-              type: "success",
-            })
-          );
+          toast.success("User has successfully signed in !");
           const response = await docService.showCartItems(userId);
           const data = response?.documents;
           if (data) {
@@ -48,8 +45,9 @@ export const useSigninForm = () => {
         }
       }
     } catch (error) {
-      dispatch(setAlert({ message: error.message, type: "error" }));
-      console.log(error.message);
+      toast.error(error.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -61,5 +59,6 @@ export const useSigninForm = () => {
     textColor,
     inputColor,
     isDarkMode,
+    isLoading,
   };
 };
