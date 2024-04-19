@@ -89,11 +89,6 @@ const Body = () => {
           >
             Top Rated Restaurants
           </button>
-
-          <div>
-            <button onClick={notify}>Notify!</button>
-            {/* <ToastContainer /> */}
-          </div>
         </div>
       </div>
       <div className="flex items-center  justify-center">

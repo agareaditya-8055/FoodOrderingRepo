@@ -10,10 +10,12 @@ const About = () => {
 
   return (
     <div
-      className={`About-container ${isDarkMode ? "text-white" : "text-black"}`}
+      className={` m-auto mt-36 max-w-screen-md p-4 ${
+        isDarkMode ? "text-white" : "text-black"
+      }`}
     >
-      <h1>More About this project</h1>
-      <div className="acordian">
+      <h1 className="my-4 text-2xl font-semibold">More About this project</h1>
+      <div className="flex items-center flex-col ">
         {faqData.map((data, index) => (
           <FAQ
             key={data.id}

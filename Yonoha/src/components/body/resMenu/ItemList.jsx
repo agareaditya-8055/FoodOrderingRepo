@@ -74,11 +74,15 @@ const ItemList = ({ items, buttonContent, actionType }) => {
               </p>
             </div>
             <div className="w-full sm:w-1/2 md:max-w-36 relative flex justify-center">
-              <img
-                className={imageId ? "w-full rounded-lg" : "hidden"}
-                src={CDN_URL + imageId}
-                alt="dishImage"
-              />
+              <div className="w-full aspect-square relative rounded-lg overflow-hidden">
+                <img
+                  className={
+                    imageId ? "absolute w-full h-full object-cover" : "hidden"
+                  }
+                  src={CDN_URL + imageId}
+                  alt="dishImage"
+                />
+              </div>
               {isLoading && (
                 <div className="absolute inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 rounded-lg">
                   <InfinitySpin />{" "}
