@@ -58,15 +58,15 @@ const ItemList = ({ items, buttonContent, actionType }) => {
             key={id}
             className={`flex flex-col-reverse gap-3 items-center md:flex md:flex-row max-w-2xl mx-auto md:justify-between rounded-lg py-2 my-2 relative px-2 ${
               isDarkMode
-                ? "bg-bgCard text-white"
-                : "bg-gray-200 border-b-2 text-black shadow-lg"
+                ? "bg-bgCard text-white transition duration-500"
+                : "bg-gray-200 border-b-2 text-black shadow-lg transition duration-500"
             }`}
           >
             <div className="flex flex-col text-start text-wrap w-full">
               <span className="font-bold">{name}</span>
               <span>₹ {priceToShow || defaultPriceToShow}</span>
               <p
-                className={`text-sm ${
+                className={`text-[1rem] ${
                   isDarkMode ? "text-gray-400" : "text-gray-500"
                 } my-3`}
               >
